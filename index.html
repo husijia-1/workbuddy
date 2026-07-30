@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WorkBuddy - 打工人工作台</title>
+<style>
+:root {
+  --pink: #FF8FAB;
+  --pink-light: #FFE4EC;
+  --pink-dark: #FF6B8A;
+  --blue: #7EC8E3;
+  --blue-light: #E0F4FF;
+  --blue-dark: #5DB8D9;
+  --purple: #C9A0DC;
+  --purple-light: #F3E5F5;
+  --yellow: #FFD166;
+  --yellow-light: #FFF3D6;
+  --green: #A8E6CF;
+  --green-light: #E8F8F0;
+  --orange: #FFB347;
+  --orange-light: #FFF0D6;
+  --gray: #F5F5F7;
+  --gray-dark: #8E8E93;
+  --text: #1C1C1E;
+  --text-secondary: #636366;
+  --bg: #F2F2F7;
+  --card: #FFFFFF;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif; background:var(--bg); color:var(--text); overflow:hidden; }
+.app { display:flex; height:100vh; width:100vw; }
+
+/* ===== 左侧导航栏 ===== */
+.sidebar {
+  width:72px; min-width:72px; background:var(--card);
+  display:flex; flex-direction:column; align-items:center;
+  padding:12px 0; border-right:1px solid rgba(0,0,0,0.04);
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+.sidebar::-webkit-scrollbar { display:none; }
+.sidebar-item {
+  display:flex; flex-direction:column; align-items:center;
+  padding:10px 4px; margin:2px 0; border-radius:14px;
+  cursor:pointer; transition:all .2s; width:60px;
+  position:relative;
+}
+.sidebar-item .icon {
+  width:36px; height:36px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; margin-bottom:4px; transition:all .2s;
+}
+.sidebar-item .label {
+  font-size:9px; color:var(--text-secondary); text-align:center;
+  line-height:1.2; max-width:60px; word-break:break-all;
+}
+.sidebar-item:hover .icon { transform:scale(1.08); }
+.sidebar-item.active .icon { background:var(--pink); color:#fff; box-shadow:0 2px 8px rgba(255,143,171,0.4); }
+.sidebar-item.active .label { color:var(--pink-dark); font-weight:600; }
+.sidebar-item .icon.pink-bg { background:var(--pink-light); color:var(--pink-dark); }
+.sidebar-item .icon.blue-bg { background:var(--blue-light); color:var(--blue-dark); }
+.sidebar-item .icon.purple-bg { background:var(--purple-light); color:var(--purple); }
+.sidebar-item .icon.yellow-bg { background:var(--yellow-light); color:#E8A838; }
+.sidebar-item .icon.green-bg { background:var(--green-light); color:#4CAF50; }
+.sidebar-item .icon.orange-bg { background:var(--orange-light); color:#E67E22; }
+
+/* ===== 主内容区 ===== */
+.main {
+  flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;
+  padding:16px; padding-bottom:80px;
+}
+.main::-webkit-scrollbar { display:none; }
+
+/* ===== 顶部日期栏 ===== */
+.header {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:16px;
+}
+.header .date-info h1 { font-size:28px; font-weight:700; }
+.header .date-info .sub { font-size:13px; color:var(--text-secondary); margin-top:2px; }
+.header .greeting {
+  background:var(--pink-light); color:var(--pink-dark);
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600;
+}
+
+/* ===== 卡片通用 ===== */
+.card {
+  background:var(--card); border-radius:16px; padding:16px;
+  margin-bottom:14px; box-shadow:var(--shadow);
+}
+.card-title {
+  display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; margin-bottom:12px;
+}
+.card-title .emoji { font-size:20px; }
+
+/* ===== 统计栏 ===== */
+.stats-row {
+  display:flex; gap:10px; margin-bottom:14px;
+}
+.stat-box {
+  flex:1; background:var(--card); border-radius:14px; padding:12px 8px;
+  text-align:center; box-shadow:var(--shadow);
+}
+.stat-box .num { font-size:22px; font-weight:700; color:var(--pink-dark); }
+.stat-box .num.blue { color:var(--blue-dark); }
+.stat-box .num.purple { color:var(--purple); }
+.stat-box .label { font-size:10px; color:var(--text-secondary); margin-top:2px; }
+
+/* ===== 每日金句 ===== */
+.quote-box {
+  background:var(--pink-light); border-radius:14px; padding:14px;
+  margin-bottom:14px; position:relative; overflow:hidden;
+}
+.quote-box::before {
+  content:'"'; position:absolute; top:-8px; left:8px;
+  font-size:48px; color:var(--pink); opacity:0.2; font-family:Georgia;
+}
+.quote-box .quote-text { font-size:13px; color:var(--pink-dark); font-weight:500; line-height:1.6; position:relative; z-index:1; }
+.quote-box .quote-author { font-size:11px; color:var(--text-secondary); margin-top:6px; text-align:right; }
+
+/* ===== 待办事项 ===== */
+.todo-list { }
+.todo-item {
+  display:flex; align-items:center; gap:10px; padding:10px 0;
+  border-bottom:1px solid #F0F0F0;
+}
+.todo-item:last-child { border-bottom:none; }
+.todo-item .checkbox {
+  width:22px; height:22px; border:2px solid var(--pink); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+}
+.todo-item .checkbox.checked { background:var(--pink); }
+.todo-item .checkbox.checked::after { content:'✓'; color:#fff; font-size:13px; font-weight:700; }
+.todo-item .todo-text { flex:1; font-size:14px; }
+.todo-item .todo-text.done { text-decoration:line-through; color:var(--text-secondary); }
+.todo-item .todo-time { font-size:11px; color:var(--blue-dark); background:var(--blue-light); padding:2px 8px; border-radius:10px; }
+.todo-item .todo-actions { display:flex; gap:6px; }
+.todo-item .btn-icon {
+  width:28px; height:28px; border-radius:8px; border:none;
+  display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px;
+}
+.btn-edit { background:var(--gray); color:var(--text-secondary); }
+.btn-del { background:var(--pink-light); color:var(--pink-dark); }
+
+.add-btn {
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  width:100%; padding:12px; border:2px dashed var(--pink); border-radius:12px;
+  background:transparent; color:var(--pink-dark); font-size:14px; font-weight:600;
+  cursor:pointer; margin-top:10px; transition:all .2s;
+}
+.add-btn:hover { background:var(--pink-light); }
+
+/* ===== 习惯打卡 ===== */
+.habit-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+}
+.habit-item {
+  display:flex; flex-direction:column; align-items:center;
+  padding:12px 4px; border-radius:14px; background:var(--gray);
+  cursor:pointer; transition:all .2s;
+}
+.habit-item .habit-icon { font-size:28px; margin-bottom:4px; }
+.habit-item .habit-name { font-size:10px; color:var(--text-secondary); }
+.habit-item .habit-streak { font-size:9px; color:var(--pink-dark); margin-top:2px; font-weight:600; }
+.habit-item.done { background:var(--green-light); }
+.habit-item.done .habit-icon { filter:grayscale(0); }
+
+/* ===== 目标管理 ===== */
+.goal-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+  border-left:4px solid var(--pink);
+}
+.goal-card .goal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.goal-card .goal-title { font-size:14px; font-weight:600; }
+.goal-card .goal-tag {
+  font-size:10px; padding:2px 8px; border-radius:8px; background:var(--pink-light); color:var(--pink-dark);
+}
+.goal-card .progress-bar {
+  height:8px; background:var(--gray); border-radius:4px; overflow:hidden; margin-bottom:6px;
+}
+.goal-card .progress-fill {
+  height:100%; background:var(--pink); border-radius:4px; transition:width .3s;
+}
+.goal-card .goal-meta { font-size:11px; color:var(--text-secondary); }
+
+/* ===== 韩语学习 ===== */
+.korean-section { margin-bottom:16px; }
+.korean-section-title {
+  font-size:14px; font-weight:700; color:var(--text-secondary); margin-bottom:10px;
+  display:flex; align-items:center; gap:6px;
+}
+.lesson-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+  display:flex; gap:12px; align-items:center; box-shadow:var(--shadow);
+}
+.lesson-card .lesson-num {
+  width:40px; height:40px; border-radius:12px; background:var(--blue-light);
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; font-weight:700; color:var(--blue-dark); flex-shrink:0;
+}
+.lesson-card .lesson-info { flex:1; }
+.lesson-card .lesson-title { font-size:14px; font-weight:600; }
+.lesson-card .lesson-desc { font-size:12px; color:var(--text-secondary); margin-top:2px; }
+.lesson-card .lesson-link {
+  background:var(--blue); color:#fff; padding:6px 14px; border-radius:10px;
+  font-size:12px; font-weight:600; text-decoration:none; flex-shrink:0;
+}
+
+.word-card {
+  display:inline-flex; flex-direction:column; align-items:center;
+  background:var(--yellow-light); border-radius:12px; padding:12px 16px;
+  margin:4px; min-width:80px;
+}
+.word-card .ko { font-size:18px; font-weight:700; color:var(--text); }
+.word-card .cn { font-size:11px; color:var(--text-secondary); margin-top:2px; }
+.word-card .pron { font-size:10px; color:var(--pink-dark); margin-top:1px; }
+
+/* ===== 会议纪要 ===== */
+.meeting-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+  border-left:4px solid var(--purple);
+}
+.meeting-card .meeting-title { font-size:14px; font-weight:600; }
+.meeting-card .meeting-date { font-size:11px; color:var(--text-secondary); margin-top:2px; }
+.meeting-card .meeting-summary { font-size:12px; color:var(--text-secondary); margin-top:6px; line-height:1.5; }
+.upload-area {
+  border:2px dashed var(--purple); border-radius:14px; padding:30px;
+  text-align:center; cursor:pointer; background:var(--purple-light);
+}
+.upload-area .upload-icon { font-size:36px; margin-bottom:8px; }
+.upload-area .upload-text { font-size:14px; color:var(--text-secondary); }
+.upload-area .upload-hint { font-size:11px; color:var(--gray-dark); margin-top:4px; }
+
+/* ===== 电子书架 ===== */
+.book-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+}
+.book-card {
+  background:var(--card); border-radius:14px; overflow:hidden; box-shadow:var(--shadow);
+  cursor:pointer; transition:transform .2s;
+}
+.book-card:hover { transform:translateY(-2px); }
+.book-card .book-cover {
+  height:100px; background:var(--pink-light); display:flex; align-items:center; justify-content:center;
+  font-size:36px; position:relative;
+}
+.book-card .book-cover .book-emoji { font-size:40px; }
+.book-card .book-info { padding:10px; }
+.book-card .book-title { font-size:12px; font-weight:600; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.book-card .book-tag { font-size:9px; color:var(--text-secondary); margin-top:4px; }
+
+/* ===== 爆款视频脚本 ===== */
+.script-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+  border-left:4px solid var(--orange);
+}
+.script-card .script-header { display:flex; justify-content:space-between; align-items:flex-start; }
+.script-card .script-title { font-size:14px; font-weight:600; flex:1; }
+.script-card .script-tag {
+  font-size:10px; padding:2px 8px; border-radius:8px; background:var(--orange-light); color:#E67E22;
+  flex-shrink:0; margin-left:8px;
+}
+.script-card .script-stats { display:flex; gap:12px; margin-top:8px; }
+.script-card .script-stat { font-size:11px; color:var(--text-secondary); }
+.script-card .script-stat b { color:var(--text); }
+.script-card .script-structure {
+  background:var(--gray); border-radius:10px; padding:10px; margin-top:10px;
+  font-size:12px; line-height:1.6;
+}
+.script-card .script-structure .step { display:flex; gap:8px; margin-bottom:6px; }
+.script-card .script-structure .step-num {
+  width:18px; height:18px; border-radius:50%; background:var(--orange); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0;
+}
+.script-card .script-adapt {
+  background:var(--green-light); border-radius:10px; padding:10px; margin-top:10px;
+  font-size:12px; color:#2E7D32;
+}
+.script-card .script-adapt-title { font-weight:700; margin-bottom:4px; }
+
+/* ===== 选题灵感 ===== */
+.idea-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+  border-left:4px solid var(--green);
+}
+.idea-card .idea-title { font-size:14px; font-weight:600; }
+.idea-card .idea-desc { font-size:12px; color:var(--text-secondary); margin-top:4px; line-height:1.5; }
+.idea-card .idea-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.idea-card .idea-tag {
+  font-size:10px; padding:3px 10px; border-radius:10px; background:var(--green-light); color:#2E7D32;
+}
+
+/* ===== 减肥方法 ===== */
+.diet-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+}
+.diet-card .diet-title { font-size:14px; font-weight:600; display:flex; align-items:center; gap:6px; }
+.diet-card .diet-content { font-size:12px; color:var(--text-secondary); margin-top:8px; line-height:1.6; }
+.diet-card .diet-list { margin-top:8px; }
+.diet-card .diet-list li {
+  font-size:12px; color:var(--text); padding:6px 0; border-bottom:1px solid #F0F0F0;
+  display:flex; align-items:center; gap:6px;
+}
+.diet-card .diet-list li::before { content:'✓'; color:var(--green); font-weight:700; }
+
+/* ===== 复盘分析 ===== */
+.review-section {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+}
+.review-section .review-title { font-size:14px; font-weight:600; margin-bottom:10px; }
+.review-section .review-item {
+  display:flex; gap:10px; padding:8px 0; border-bottom:1px solid #F0F0F0;
+}
+.review-section .review-item:last-child { border-bottom:none; }
+.review-section .review-icon { font-size:20px; flex-shrink:0; }
+.review-section .review-text { font-size:12px; line-height:1.5; }
+.review-section .review-text .highlight { color:var(--pink-dark); font-weight:600; }
+
+/* ===== 底部输入框 ===== */
+.bottom-input {
+  position:fixed; bottom:0; left:72px; right:0; background:var(--card);
+  padding:10px 16px; border-top:1px solid rgba(0,0,0,0.04);
+  display:flex; gap:8px; align-items:center; z-index:100;
+}
+.bottom-input input {
+  flex:1; border:1px solid #E5E5EA; border-radius:20px; padding:10px 16px;
+  font-size:14px; outline:none; background:var(--gray);
+}
+.bottom-input .send-btn {
+  width:40px; height:40px; border-radius:50%; background:var(--pink);
+  border:none; color:#fff; font-size:18px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ===== 页面切换动画 ===== */
+.page { display:none; animation:fadeIn .3s ease; }
+.page.active { display:block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* ===== 弹窗 ===== */
+.modal-overlay {
+  position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4);
+  display:none; align-items:center; justify-content:center; z-index:200;
+}
+.modal-overlay.active { display:flex; }
+.modal {
+  background:var(--card); border-radius:20px; padding:20px; width:85%; max-width:340px;
+  max-height:80vh; overflow-y:auto;
+}
+.modal-title { font-size:18px; font-weight:700; margin-bottom:16px; }
+.modal-input {
+  width:100%; border:1px solid #E5E5EA; border-radius:12px; padding:12px;
+  font-size:14px; margin-bottom:10px; outline:none;
+}
+.modal-btn {
+  width:100%; padding:12px; border-radius:12px; border:none;
+  background:var(--pink); color:#fff; font-size:14px; font-weight:600; cursor:pointer;
+}
+.modal-close {
+  position:absolute; top:10px; right:14px; font-size:24px; color:var(--text-secondary);
+  cursor:pointer; background:none; border:none;
+}
+
+/* ===== 语音跟读 ===== */
+.audio-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
+  display:flex; align-items:center; gap:12px;
+}
+.audio-card .play-btn {
+  width:44px; height:44px; border-radius:50%; background:var(--blue);
+  border:none; color:#fff; font-size:18px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
+.audio-card .audio-info { flex:1; }
+.audio-card .audio-title { font-size:14px; font-weight:600; }
+.audio-card .audio-sub { font-size:11px; color:var(--text-secondary); }
+
+/* ===== 响应式 ===== */
+@media (max-width:380px) {
+  .sidebar { width:64px; min-width:64px; }
+  .sidebar-item { width:52px; padding:8px 2px; }
+  .sidebar-item .icon { width:32px; height:32px; font-size:18px; }
+  .sidebar-item .label { font-size:8px; }
+  .main { padding:12px; }
+  .bottom-input { left:64px; }
+  .book-grid { grid-template-columns:repeat(2,1fr); }
+}
+
+/* ===== 隐藏滚动条但保持滚动 ===== */
+.hide-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+.hide-scrollbar::-webkit-scrollbar { display:none; }
+
+/* ===== 标签页 ===== */
+.tab-bar {
+  display:flex; gap:8px; margin-bottom:14px; overflow-x:auto; padding-bottom:4px;
+}
+.tab-bar .tab {
+  padding:6px 14px; border-radius:20px; background:var(--gray);
+  font-size:12px; color:var(--text-secondary); cursor:pointer; white-space:nowrap;
+  border:none; font-family:inherit;
+}
+.tab-bar .tab.active { background:var(--pink); color:#fff; font-weight:600; }
+
+/* ===== 已完成列表 ===== */
+.done-list .todo-item .checkbox { background:var(--green); border-color:var(--green); }
+.done-list .todo-item .checkbox::after { content:'✓'; color:#fff; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ===== 左侧导航栏 ===== -->
+<nav class="sidebar hide-scrollbar" id="sidebar">
+  <div class="sidebar-item active" data-page="daily" onclick="switchPage('daily')">
+    <div class="icon pink-bg">📋</div>
+    <div class="label">每日计划</div>
+  </div>
+  <div class="sidebar-item" data-page="habit" onclick="switchPage('habit')">
+    <div class="icon green-bg">✅</div>
+    <div class="label">习惯打卡</div>
+  </div>
+  <div class="sidebar-item" data-page="goal" onclick="switchPage('goal')">
+    <div class="icon yellow-bg">🎯</div>
+    <div class="label">目标管理</div>
+  </div>
+  <div class="sidebar-item" data-page="korean" onclick="switchPage('korean')">
+    <div class="icon blue-bg">🇰🇷</div>
+    <div class="label">韩语学习</div>
+  </div>
+  <div class="sidebar-item" data-page="meeting" onclick="switchPage('meeting')">
+    <div class="icon purple-bg">📝</div>
+    <div class="label">会议纪要</div>
+  </div>
+  <div class="sidebar-item" data-page="books" onclick="switchPage('books')">
+    <div class="icon pink-bg">📚</div>
+    <div class="label">电子书架</div>
+  </div>
+  <div class="sidebar-item" data-page="scripts" onclick="switchPage('scripts')">
+    <div class="icon orange-bg">🎬</div>
+    <div class="label">爆款脚本</div>
+  </div>
+  <div class="sidebar-item" data-page="ideas" onclick="switchPage('ideas')">
+    <div class="icon green-bg">💡</div>
+    <div class="label">选题灵感</div>
+  </div>
+  <div class="sidebar-item" data-page="diet" onclick="switchPage('diet')">
+    <div class="icon yellow-bg">🥗</div>
+    <div class="label">减肥方法</div>
+  </div>
+</nav>
+
+<!-- ===== 主内容区 ===== -->
+<main class="main hide-scrollbar" id="main">
+
+<!-- ========== 每日计划 ========== -->
+<div class="page active" id="page-daily">
+  <div class="header">
+    <div class="date-info">
+      <h1 id="currentDate">7月30日</h1>
+      <div class="sub" id="currentWeek">周三 | 2026-07-30</div>
+    </div>
+    <div class="greeting" id="greeting">下午好，打工人</div>
+  </div>
+
+  <div class="quote-box">
+    <div class="quote-text" id="dailyQuote">"下班后的时间，才是真正属于自己的人生。微醺一杯，学点韩语，让平凡的日子闪闪发光。"</div>
+    <div class="quote-author">— WorkBuddy 每日寄语</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="num" id="todoCount">0</div>
+      <div class="label">今日待办</div>
+    </div>
+    <div class="stat-box">
+      <div class="num blue" id="habitCount">0</div>
+      <div class="label">习惯打卡</div>
+    </div>
+    <div class="stat-box">
+      <div class="num purple" id="koreanMin">0</div>
+      <div class="label">韩语分钟</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📝</span> 今日待办</div>
+    <div class="todo-list" id="todoList">
+      <!-- 动态生成 -->
+    </div>
+    <button class="add-btn" onclick="openAddTodo()">+ 添加新任务</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">✅</span> 今日已完成</div>
+    <div class="todo-list done-list" id="doneList">
+      <!-- 动态生成 -->
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📊</span> 内容复盘</div>
+    <div class="review-section">
+      <div class="review-item">
+        <div class="review-icon">📈</div>
+        <div class="review-text">
+          <span class="highlight">播放量分析：</span>建议关注黄金发布时间 18:00-21:00，打工人下班时段流量最高
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">🎨</div>
+        <div class="review-text">
+          <span class="highlight">封面优化：</span>使用"下班+微醺+韩语"三元素组合封面，点击率提升40%
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">💬</div>
+        <div class="review-text">
+          <span class="highlight">互动提升：</span>结尾加入"今天学了什么韩语？评论区告诉我"引导互动
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 习惯打卡 ========== -->
+<div class="page" id="page-habit">
+  <div class="header">
+    <div class="date-info">
+      <h1>习惯打卡</h1>
+      <div class="sub">坚持21天，养成好习惯</div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="num" id="habitStreak">5</div>
+      <div class="label">连续天数</div>
+    </div>
+    <div class="stat-box">
+      <div class="num blue" id="habitTotal">12</div>
+      <div class="label">本月累计</div>
+    </div>
+    <div class="stat-box">
+      <div class="num purple" id="habitRate">85%</div>
+      <div class="label">完成率</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🌅</span> 晨间习惯</div>
+    <div class="habit-grid" id="habitMorning">
+      <div class="habit-item" data-habit="water" onclick="toggleHabit(this)">
+        <div class="habit-icon">💧</div>
+        <div class="habit-name">早起喝水</div>
+        <div class="habit-streak">🔥5天</div>
+      </div>
+      <div class="habit-item" data-habit="stretch" onclick="toggleHabit(this)">
+        <div class="habit-icon">🧘</div>
+        <div class="habit-name">晨间拉伸</div>
+        <div class="habit-streak">🔥3天</div>
+      </div>
+      <div class="habit-item" data-habit="breakfast" onclick="toggleHabit(this)">
+        <div class="habit-icon">🍳</div>
+        <div class="habit-name">营养早餐</div>
+        <div class="habit-streak">🔥7天</div>
+      </div>
+      <div class="habit-item" data-habit="plan" onclick="toggleHabit(this)">
+        <div class="habit-icon">📋</div>
+        <div class="habit-name">今日计划</div>
+        <div class="habit-streak">🔥5天</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">💼</span> 工作习惯</div>
+    <div class="habit-grid" id="habitWork">
+      <div class="habit-item" data-habit="focus" onclick="toggleHabit(this)">
+        <div class="habit-icon">🍅</div>
+        <div class="habit-name">番茄专注</div>
+        <div class="habit-streak">🔥2天</div>
+      </div>
+      <div class="habit-item" data-habit="water-work" onclick="toggleHabit(this)">
+        <div class="habit-icon">🥤</div>
+        <div class="habit-name">定时喝水</div>
+        <div class="habit-streak">🔥4天</div>
+      </div>
+      <div class="habit-item" data-habit="eye" onclick="toggleHabit(this)">
+        <div class="habit-icon">👁️</div>
+        <div class="habit-name">护眼休息</div>
+        <div class="habit-streak">🔥6天</div>
+      </div>
+      <div class="habit-item" data-habit="stand" onclick="toggleHabit(this)">
+        <div class="habit-icon">🚶</div>
+        <div class="habit-name">站立办公</div>
+        <div class="habit-streak">🔥1天</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🌙</span> 晚间习惯</div>
+    <div class="habit-grid" id="habitEvening">
+      <div class="habit-item" data-habit="korean" onclick="toggleHabit(this)">
+        <div class="habit-icon">🇰🇷</div>
+        <div class="habit-name">韩语学习</div>
+        <div class="habit-streak">🔥5天</div>
+      </div>
+      <div class="habit-item" data-habit="wine" onclick="toggleHabit(this)">
+        <div class="habit-icon">🍷</div>
+        <div class="habit-name">微醺时刻</div>
+        <div class="habit-streak">🔥3天</div>
+      </div>
+      <div class="habit-item" data-habit="read" onclick="toggleHabit(this)">
+        <div class="habit-icon">📖</div>
+        <div class="habit-name">睡前阅读</div>
+        <div class="habit-streak">🔥8天</div>
+      </div>
+      <div class="habit-item" data-habit="sleep" onclick="toggleHabit(this)">
+        <div class="habit-icon">😴</div>
+        <div class="habit-name">23点前睡</div>
+        <div class="habit-streak">🔥2天</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 目标管理 ========== -->
+<div class="page" id="page-goal">
+  <div class="header">
+    <div class="date-info">
+      <h1>目标管理</h1>
+      <div class="sub">拆解大目标，每天进步一点点</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🎯</span> 本月核心目标</div>
+    <div class="goal-card">
+      <div class="goal-header">
+        <div class="goal-title">抖音粉丝突破1000</div>
+        <div class="goal-tag">进行中</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+      <div class="goal-meta">当前 652 / 1000 粉丝 · 还需 348 个</div>
+    </div>
+    <div class="goal-card" style="border-left-color:var(--blue)">
+      <div class="goal-header">
+        <div class="goal-title">韩语TOPIK1级通关</div>
+        <div class="goal-tag" style="background:var(--blue-light);color:var(--blue-dark)">进行中</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:40%;background:var(--blue)"></div></div>
+      <div class="goal-meta">已学 16 / 40 课时 · 预计8月底完成</div>
+    </div>
+    <div class="goal-card" style="border-left-color:var(--green)">
+      <div class="goal-header">
+        <div class="goal-title">减重5斤</div>
+        <div class="goal-tag" style="background:var(--green-light);color:#2E7D32">进行中</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:30%;background:var(--green)"></div></div>
+      <div class="goal-meta">已减 1.5 / 5 斤 · 当前 112.5 斤</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📅</span> 本周任务拆解</div>
+    <div class="todo-list">
+      <div class="todo-item">
+        <div class="checkbox"></div>
+        <div class="todo-text">发布3条韩语学习短视频</div>
+        <div class="todo-time">周三</div>
+      </div>
+      <div class="todo-item">
+        <div class="checkbox"></div>
+        <div class="todo-text">完成韩语发音第5-7课</div>
+        <div class="todo-time">周四</div>
+      </div>
+      <div class="todo-item">
+        <div class="checkbox"></div>
+        <div class="todo-text">拍摄"下班微醺学韩语"vlog</div>
+        <div class="todo-time">周五</div>
+      </div>
+      <div class="todo-item">
+        <div class="checkbox"></div>
+        <div class="todo-text">整理本周爆款视频数据复盘</div>
+        <div class="todo-time">周日</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🏆</span> 成就勋章</div>
+    <div class="habit-grid">
+      <div class="habit-item" style="background:var(--yellow-light)">
+        <div class="habit-icon">🥇</div>
+        <div class="habit-name">连续7天</div>
+        <div class="habit-streak">已解锁</div>
+      </div>
+      <div class="habit-item" style="background:var(--pink-light)">
+        <div class="habit-icon">🎥</div>
+        <div class="habit-name">发布10条</div>
+        <div class="habit-streak">已解锁</div>
+      </div>
+      <div class="habit-item" style="background:var(--gray)">
+        <div class="habit-icon" style="filter:grayscale(1)">💯</div>
+        <div class="habit-name">粉丝破千</div>
+        <div class="habit-streak">待解锁</div>
+      </div>
+      <div class="habit-item" style="background:var(--gray)">
+        <div class="habit-icon" style="filter:grayscale(1)">🇰🇷</div>
+        <div class="habit-name">TOPIK1</div>
+        <div class="habit-streak">待解锁</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 韩语学习 ========== -->
+<div class="page" id="page-korean">
+  <div class="header">
+    <div class="date-info">
+      <h1>韩语学习</h1>
+      <div class="sub">从零开始，每天进步</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchKoreanTab('course',this)">每日课程</button>
+    <button class="tab" onclick="switchKoreanTab('words',this)">单词卡</button>
+    <button class="tab" onclick="switchKoreanTab('speak',this)">语音跟读</button>
+    <button class="tab" onclick="switchKoreanTab('video',this)">视频课</button>
+  </div>
+
+  <!-- 每日课程 -->
+  <div id="korean-course">
+    <div class="card">
+      <div class="card-title"><span class="emoji">📚</span> 今日课程：第16课</div>
+      <div class="lesson-card">
+        <div class="lesson-num">16</div>
+        <div class="lesson-info">
+          <div class="lesson-title">收音 ㄱ/ㄴ/ㄷ/ㄹ/ㅁ</div>
+          <div class="lesson-desc">学习韩语收音规则，掌握发音技巧</div>
+        </div>
+        <a href="https://www.bilibili.com/video/BV1RFTc62E29/?p=16" target="_blank" class="lesson-link">开始学习</a>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--green-light);color:#2E7D32">✓</div>
+        <div class="lesson-info">
+          <div class="lesson-title">第15课 双元音 ㅢ/ㅚ/ㅐ</div>
+          <div class="lesson-desc">已完成 · 用时 25分钟</div>
+        </div>
+        <a href="https://www.bilibili.com/video/BV1RFTc62E29/?p=15" target="_blank" class="lesson-link" style="background:var(--green)">复习</a>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--green-light);color:#2E7D32">✓</div>
+        <div class="lesson-info">
+          <div class="lesson-title">第14课 双元音 ㅑ/ㅕ/ㅛ/ㅠ</div>
+          <div class="lesson-desc">已完成 · 用时 22分钟</div>
+        </div>
+        <a href="https://www.bilibili.com/video/BV1RFTc62E29/?p=14" target="_blank" class="lesson-link" style="background:var(--green)">复习</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="emoji">📖</span> 学习进度</div>
+      <div class="goal-card" style="border-left-color:var(--blue)">
+        <div class="goal-header">
+          <div class="goal-title">发音阶段</div>
+          <div class="goal-tag" style="background:var(--blue-light);color:var(--blue-dark)">40%</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:40%;background:var(--blue)"></div></div>
+        <div class="goal-meta">已完成 16 / 40 课时</div>
+      </div>
+      <div class="goal-card" style="border-left-color:var(--purple)">
+        <div class="goal-header">
+          <div class="goal-title">基础语法</div>
+          <div class="goal-tag" style="background:var(--purple-light);color:var(--purple)">0%</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--purple)"></div></div>
+        <div class="goal-meta">待解锁 · 完成发音后开启</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 单词卡 -->
+  <div id="korean-words" style="display:none">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🃏</span> 今日单词（10个）</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;margin:-4px;">
+        <div class="word-card"><div class="ko">안녕하세요</div><div class="pron">an-nyeong-ha-se-yo</div><div class="cn">你好</div></div>
+        <div class="word-card"><div class="ko">감사합니다</div><div class="pron">gam-sa-ham-ni-da</div><div class="cn">谢谢</div></div>
+        <div class="word-card"><div class="ko">사랑해요</div><div class="pron">sa-rang-hae-yo</div><div class="cn">我爱你</div></div>
+        <div class="word-card"><div class="ko">미안해요</div><div class="pron">mi-an-hae-yo</div><div class="cn">对不起</div></div>
+        <div class="word-card"><div class="ko">잘 자요</div><div class="pron">jal ja-yo</div><div class="cn">晚安</div></div>
+        <div class="word-card"><div class="ko">맛있어요</div><div class="pron">ma-si-sseo-yo</div><div class="cn">好吃</div></div>
+        <div class="word-card"><div class="ko">예뻐요</div><div class="pron">ye-ppeo-yo</div><div class="cn">漂亮</div></div>
+        <div class="word-card"><div class="ko">힘내요</div><div class="pron">him-nae-yo</div><div class="cn">加油</div></div>
+        <div class="word-card"><div class="ko">화이팅</div><div class="pron">hwa-i-ting</div><div class="cn">fighting</div></div>
+        <div class="word-card"><div class="ko">고마워요</div><div class="pron">go-ma-wo-yo</div><div class="cn">谢谢你</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="emoji">🔄</span> 已掌握单词</div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;margin:-4px;">
+        <div class="word-card" style="background:var(--green-light)"><div class="ko">네</div><div class="pron">ne</div><div class="cn">是</div></div>
+        <div class="word-card" style="background:var(--green-light)"><div class="ko">아니요</div><div class="pron">a-ni-yo</div><div class="cn">不是</div></div>
+        <div class="word-card" style="background:var(--green-light)"><div class="ko">안녕</div><div class="pron">an-nyeong</div><div class="cn">你好/再见</div></div>
+        <div class="word-card" style="background:var(--green-light)"><div class="ko">이름</div><div class="pron">i-reum</div><div class="cn">名字</div></div>
+        <div class="word-card" style="background:var(--green-light)"><div class="ko">나라</div><div class="pron">na-ra</div><div class="cn">国家</div></div>
+        <div class="word-card" style="background:var(--green-light)"><div class="ko">친구</div><div class="pron">chin-gu</div><div class="cn">朋友</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语音跟读 -->
+  <div id="korean-speak" style="display:none">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🎙️</span> 今日跟读练习</div>
+      <div class="audio-card">
+        <button class="play-btn" onclick="speakText('안녕하세요')">▶</button>
+        <div class="audio-info">
+          <div class="audio-title">안녕하세요</div>
+          <div class="audio-sub">an-nyeong-ha-se-yo · 你好</div>
+        </div>
+      </div>
+      <div class="audio-card">
+        <button class="play-btn" onclick="speakText('감사합니다')">▶</button>
+        <div class="audio-info">
+          <div class="audio-title">감사합니다</div>
+          <div class="audio-sub">gam-sa-ham-ni-da · 谢谢</div>
+        </div>
+      </div>
+      <div class="audio-card">
+        <button class="play-btn" onclick="speakText('사랑해요')">▶</button>
+        <div class="audio-info">
+          <div class="audio-title">사랑해요</div>
+          <div class="audio-sub">sa-rang-hae-yo · 我爱你</div>
+        </div>
+      </div>
+      <div class="audio-card">
+        <button class="play-btn" onclick="speakText('오늘도 힘내요')">▶</button>
+        <div class="audio-info">
+          <div class="audio-title">오늘도 힘내요</div>
+          <div class="audio-sub">o-neul-do him-nae-yo · 今天也要加油</div>
+        </div>
+      </div>
+      <div class="audio-card">
+        <button class="play-btn" onclick="speakText('맛있는 저녁이에요')">▶</button>
+        <div class="audio-info">
+          <div class="audio-title">맛있는 저녁이에요</div>
+          <div class="audio-sub">ma-si-nneun jeo-nyeo-gi-e-yo · 晚餐很好吃</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="emoji">📝</span> 跟读小贴士</div>
+      <div class="diet-content">
+        <p>1. 先听标准发音，注意语调和节奏</p>
+        <p>2. 逐词跟读，确保每个音节准确</p>
+        <p>3. 整句连读，模仿自然语调</p>
+        <p>4. 录音对比，找出差异改进</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 视频课 -->
+  <div id="korean-video" style="display:none">
+    <div class="card">
+      <div class="card-title"><span class="emoji">🎬</span> 推荐视频课程</div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--pink-light);color:var(--pink-dark)">B站</div>
+        <div class="lesson-info">
+          <div class="lesson-title">【全400集】2026最细自学韩语全套教程</div>
+          <div class="lesson-desc">零基础入门 · 已更新400集 · 持续更新中</div>
+        </div>
+        <a href="https://www.bilibili.com/video/BV1RFTc62E29/" target="_blank" class="lesson-link">观看</a>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--pink-light);color:var(--pink-dark)">B站</div>
+        <div class="lesson-info">
+          <div class="lesson-title">【整整600集】韩语零基础入门全套教程</div>
+          <div class="lesson-desc">一周入门 · 全程干货无废话</div>
+        </div>
+        <a href="https://www.bilibili.com/video/BV1SPMzzaErY/" target="_blank" class="lesson-link">观看</a>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--blue-light);color:var(--blue-dark)">MOOC</div>
+        <div class="lesson-info">
+          <div class="lesson-title">基础韩语I - 复旦大学</div>
+          <div class="lesson-desc">中国大学MOOC · 系统学习</div>
+        </div>
+        <a href="https://www.icourse163.org/course/FUDAN-1473663163" target="_blank" class="lesson-link">观看</a>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--purple-light);color:var(--purple)">UMOOC</div>
+        <div class="lesson-info">
+          <div class="lesson-title">韩国语入门 - 高校外语慕课</div>
+          <div class="lesson-desc">8个教学单元 · 语音到对话</div>
+        </div>
+        <a href="https://moocs.unipus.cn/course/5201" target="_blank" class="lesson-link">观看</a>
+      </div>
+      <div class="lesson-card">
+        <div class="lesson-num" style="background:var(--green-light);color:#2E7D32">免费</div>
+        <div class="lesson-info">
+          <div class="lesson-title">LingoHut 免费韩语课程</div>
+          <div class="lesson-desc">125节免费课程 · 母语者发音</div>
+        </div>
+        <a href="https://www.lingohut.com/zh/l64/%E5%AD%A6%E4%B9%A0%E9%9F%A9%E8%AF%AD" target="_blank" class="lesson-link">观看</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 会议纪要 ========== -->
+<div class="page" id="page-meeting">
+  <div class="header">
+    <div class="date-info">
+      <h1>会议纪要</h1>
+      <div class="sub">上传音频，AI自动生成纪要</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📤</span> 上传会议音频</div>
+    <div class="upload-area" onclick="document.getElementById('audioInput').click()">
+      <div class="upload-icon">🎙️</div>
+      <div class="upload-text">点击上传音频文件</div>
+      <div class="upload-hint">支持 MP3 / WAV / M4A 格式</div>
+    </div>
+    <input type="file" id="audioInput" accept="audio/*" style="display:none" onchange="handleAudioUpload(this)">
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📋</span> 历史纪要</div>
+    <div class="meeting-card">
+      <div class="meeting-title">周例会 - 项目进度同步</div>
+      <div class="meeting-date">2026-07-28 14:00 · 时长 45分钟</div>
+      <div class="meeting-summary">
+        <b>参会人员：</b>张经理、李工、王设计<br>
+        <b>核心结论：</b><br>
+        1. 前端页面开发进度80%，预计本周五完成<br>
+        2. 后端API接口已联调通过<br>
+        3. 下周一开始UI走查<br>
+        <b>待办事项：</b>王设计周三前提交最终设计稿
+      </div>
+    </div>
+    <div class="meeting-card">
+      <div class="meeting-title">产品需求评审会</div>
+      <div class="meeting-date">2026-07-25 10:00 · 时长 60分钟</div>
+      <div class="meeting-summary">
+        <b>参会人员：</b>产品经理、技术负责人、测试<br>
+        <b>核心结论：</b><br>
+        1. v2.0版本新增3个功能模块<br>
+        2. 性能优化需求优先级提升<br>
+        3. 用户反馈功能纳入下期迭代<br>
+        <b>待办事项：</b>技术负责人评估开发工时
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 电子书架 ========== -->
+<div class="page" id="page-books">
+  <div class="header">
+    <div class="date-info">
+      <h1>电子书架</h1>
+      <div class="sub">女生身心成长 · 成为更好的自己</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchBookTab('growth',this)">自我成长</button>
+    <button class="tab" onclick="switchBookTab('mind',this)">心理疗愈</button>
+    <button class="tab" onclick="switchBookTab('career',this)">职场进阶</button>
+    <button class="tab" onclick="switchBookTab('health',this)">身心健康</button>
+  </div>
+
+  <div id="books-growth">
+    <div class="book-grid">
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/e0232630813ab82b3g01063b','_blank')">
+        <div class="book-cover" style="background:var(--pink-light)"><div class="book-emoji">👩</div></div>
+        <div class="book-info">
+          <div class="book-title">大女生</div>
+          <div class="book-tag">杨澜 · 自我认知</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/0b532bb0813aba4e8g0100e0','_blank')">
+        <div class="book-cover" style="background:var(--blue-light)"><div class="book-emoji">✨</div></div>
+        <div class="book-info">
+          <div class="book-title">正能量：女性心灵成长</div>
+          <div class="book-tag">卡耐基 · 心灵成长</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/73532b707266d2a07358b3b','_blank')">
+        <div class="book-cover" style="background:var(--yellow-light)"><div class="book-emoji">🦋</div></div>
+        <div class="book-info">
+          <div class="book-title">成为</div>
+          <div class="book-tag">米歇尔·奥巴马</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/ce032b305a9bc1ce032b6e7','_blank')">
+        <div class="book-cover" style="background:var(--green-light)"><div class="book-emoji">🌱</div></div>
+        <div class="book-info">
+          <div class="book-title">向前一步</div>
+          <div class="book-tag">谢丽尔·桑德伯格</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/6a0326c0715c23e06a03fb3','_blank')">
+        <div class="book-cover" style="background:var(--purple-light)"><div class="book-emoji">💎</div></div>
+        <div class="book-info">
+          <div class="book-title">断舍离</div>
+          <div class="book-tag">山下英子 · 生活整理</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/6f1323607159bc1a6f13a3a','_blank')">
+        <div class="book-cover" style="background:var(--orange-light)"><div class="book-emoji">🎯</div></div>
+        <div class="book-info">
+          <div class="book-title">刻意练习</div>
+          <div class="book-tag">安德斯·艾利克森</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="books-mind" style="display:none">
+    <div class="book-grid">
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/6e1323607159bc1a6e13a3a','_blank')">
+        <div class="book-cover" style="background:var(--blue-light)"><div class="book-emoji">🧘</div></div>
+        <div class="book-info">
+          <div class="book-title">当下的力量</div>
+          <div class="book-tag">埃克哈特·托利</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/7a1323607159bc1a7a13a3a','_blank')">
+        <div class="book-cover" style="background:var(--pink-light)"><div class="book-emoji">❤️</div></div>
+        <div class="book-info">
+          <div class="book-title">被讨厌的勇气</div>
+          <div class="book-tag">岸见一郎 · 阿德勒</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/8b1323607159bc1a8b13a3a','_blank')">
+        <div class="book-cover" style="background:var(--green-light)"><div class="book-emoji">🌿</div></div>
+        <div class="book-info">
+          <div class="book-title">蛤蟆先生去看心理医生</div>
+          <div class="book-tag">罗伯特·戴博德</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/9c1323607159bc1a9c13a3a','_blank')">
+        <div class="book-cover" style="background:var(--yellow-light)"><div class="book-emoji">☀️</div></div>
+        <div class="book-info">
+          <div class="book-title">自卑与超越</div>
+          <div class="book-tag">阿德勒 · 心理学</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/ad1323607159bc1aad13a3a','_blank')">
+        <div class="book-cover" style="background:var(--purple-light)"><div class="book-emoji">🌙</div></div>
+        <div class="book-info">
+          <div class="book-title">情绪急救</div>
+          <div class="book-tag">盖伊·温奇 · 心理疗愈</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/be1323607159bc1abe13a3a','_blank')">
+        <div class="book-cover" style="background:var(--orange-light)"><div class="book-emoji">🔮</div></div>
+        <div class="book-info">
+          <div class="book-title">心流</div>
+          <div class="book-tag">米哈里·契克森米哈赖</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="books-career" style="display:none">
+    <div class="book-grid">
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/cf1323607159bc1acf13a3a','_blank')">
+        <div class="book-cover" style="background:var(--blue-light)"><div class="book-emoji">💼</div></div>
+        <div class="book-info">
+          <div class="book-title">深度工作</div>
+          <div class="book-tag">卡尔·纽波特</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/d01323607159bc1ad013a3a','_blank')">
+        <div class="book-cover" style="background:var(--pink-light)"><div class="book-emoji">📈</div></div>
+        <div class="book-info">
+          <div class="book-title">原则</div>
+          <div class="book-tag">瑞·达利欧</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/e11323607159bc1ae113a3a','_blank')">
+        <div class="book-cover" style="background:var(--green-light)"><div class="book-emoji">🚀</div></div>
+        <div class="book-info">
+          <div class="book-title">高效能人士的七个习惯</div>
+          <div class="book-tag">史蒂芬·柯维</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/f21323607159bc1af213a3a','_blank')">
+        <div class="book-cover" style="background:var(--yellow-light)"><div class="book-emoji">🎤</div></div>
+        <div class="book-info">
+          <div class="book-title">沟通的方法</div>
+          <div class="book-tag">脱不花 · 职场沟通</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/031323607159bc1a0313a3a','_blank')">
+        <div class="book-cover" style="background:var(--purple-light)"><div class="book-emoji">⏰</div></div>
+        <div class="book-info">
+          <div class="book-title">番茄工作法</div>
+          <div class="book-tag">弗朗西斯科·西里洛</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/141323607159bc1a1413a3a','_blank')">
+        <div class="book-cover" style="background:var(--orange-light)"><div class="book-emoji">🧠</div></div>
+        <div class="book-info">
+          <div class="book-title">思考，快与慢</div>
+          <div class="book-tag">丹尼尔·卡尼曼</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="books-health" style="display:none">
+    <div class="book-grid">
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/251323607159bc1a2513a3a','_blank')">
+        <div class="book-cover" style="background:var(--green-light)"><div class="book-emoji">🥗</div></div>
+        <div class="book-info">
+          <div class="book-title">轻断食</div>
+          <div class="book-tag">麦克尔·莫斯利</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/361323607159bc1a3613a3a','_blank')">
+        <div class="book-cover" style="background:var(--blue-light)"><div class="book-emoji">😴</div></div>
+        <div class="book-info">
+          <div class="book-title">睡眠革命</div>
+          <div class="book-tag">尼克·利特尔黑尔斯</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/471323607159bc1a4713a3a','_blank')">
+        <div class="book-cover" style="background:var(--pink-light)"><div class="book-emoji">🏃</div></div>
+        <div class="book-info">
+          <div class="book-title">运动改造大脑</div>
+          <div class="book-tag">约翰·瑞迪</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/581323607159bc1a5813a3a','_blank')">
+        <div class="book-cover" style="background:var(--yellow-light)"><div class="book-emoji">🍎</div></div>
+        <div class="book-info">
+          <div class="book-title">吃出自愈力</div>
+          <div class="book-tag">威廉·李 · 健康饮食</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/691323607159bc1a6913a3a','_blank')">
+        <div class="book-cover" style="background:var(--purple-light)"><div class="book-emoji">🧘‍♀️</div></div>
+        <div class="book-info">
+          <div class="book-title">正念的奇迹</div>
+          <div class="book-tag">一行禅师</div>
+        </div>
+      </div>
+      <div class="book-card" onclick="window.open('https://weread.qq.com/web/reader/7a1323607159bc1a7a13a3a','_blank')">
+        <div class="book-cover" style="background:var(--orange-light)"><div class="book-emoji">💪</div></div>
+        <div class="book-info">
+          <div class="book-title">掌控习惯</div>
+          <div class="book-tag">詹姆斯·克利尔</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 爆款视频脚本 ========== -->
+<div class="page" id="page-scripts">
+  <div class="header">
+    <div class="date-info">
+      <h1>爆款视频脚本</h1>
+      <div class="sub">打工人微醺学韩语 · 每日更新</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🔥</span> 今日抖音热点（7月30日）</div>
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">饭店的暑假工，小菜收费！</div>
+        <div class="script-tag">6567万播放</div>
+      </div>
+      <div class="script-stats">
+        <div class="script-stat"><b>作者：</b>周小闹</div>
+        <div class="script-stat"><b>类型：</b>职场/搞笑</div>
+      </div>
+      <div class="script-adapt">
+        <div class="script-adapt-title">💡 改编灵感</div>
+        可以结合"打工人午餐"场景，用韩语点餐的搞笑剧情，突出"打工人的午餐自由"
+      </div>
+    </div>
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">当我终于打算让自己不憋屈一次时</div>
+        <div class="script-tag">3432万播放</div>
+      </div>
+      <div class="script-stats">
+        <div class="script-stat"><b>作者：</b>无厘头泽师傅</div>
+        <div class="script-stat"><b>类型：</b>vlog日常</div>
+      </div>
+      <div class="script-adapt">
+        <div class="script-adapt-title">💡 改编灵感</div>
+        "下班后的时间才是真正属于自己的"——微醺学韩语，拒绝内卷，做自己的主角
+      </div>
+    </div>
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">半个抖音的知识博主都去四川了</div>
+        <div class="script-tag">1026万热度</div>
+      </div>
+      <div class="script-stats">
+        <div class="script-stat"><b>类型：</b>热点话题</div>
+        <div class="script-stat"><b>趋势：</b>知识+旅行</div>
+      </div>
+      <div class="script-adapt">
+        <div class="script-adapt-title">💡 改编灵感</div>
+        "半个抖音的打工人都在学韩语"——结合热点，展示打工人群体的学习热潮
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🎬</span> 推荐脚本模板</div>
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">模板A：下班仪式感vlog</div>
+        <div class="script-tag">高互动</div>
+      </div>
+      <div class="script-structure">
+        <div class="step"><div class="step-num">1</div><div>开头3秒："终于下班了！"+疲惫表情（共鸣钩子）</div></div>
+        <div class="step"><div class="step-num">2</div><div>转场：回家路上/地铁/公交（打工人日常）</div></div>
+        <div class="step"><div class="step-num">3</div><div>微醺时刻：倒酒/调酒特写（氛围感）</div></div>
+        <div class="step"><div class="step-num">4</div><div>学习环节：打开韩语书/APP，展示今日学习内容</div></div>
+        <div class="step"><div class="step-num">5</div><div>结尾：用韩语说晚安/今日学到的句子（记忆点）</div></div>
+      </div>
+      <div class="script-adapt">
+        <div class="script-adapt-title">🎯 优化建议</div>
+        封面用"下班+酒+韩语书"三元素组合，标题用"00后下班自学韩语第X天"
+      </div>
+    </div>
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">模板B：韩语教学短剧</div>
+        <div class="script-tag">高收藏</div>
+      </div>
+      <div class="script-structure">
+        <div class="step"><div class="step-num">1</div><div>开头3秒：韩剧经典场景/台词（吸引韩剧粉）</div></div>
+        <div class="step"><div class="step-num">2</div><div>拆解：逐词讲解这句韩语的意思和发音</div></div>
+        <div class="step"><div class="step-num">3</div><div>场景应用：模拟在餐厅/购物时使用这句</div></div>
+        <div class="step"><div class="step-num">4</div><div>微醺彩蛋："学完这句，来一杯庆祝一下"</div></div>
+        <div class="step"><div class="step-num">5</div><div>结尾：预告下期内容，引导关注</div></div>
+      </div>
+      <div class="script-adapt">
+        <div class="script-adapt-title">🎯 优化建议</div>
+        选择热门韩剧台词，如《黑暗荣耀》《鱿鱼游戏》等，蹭热度+教学
+      </div>
+    </div>
+    <div class="script-card">
+      <div class="script-header">
+        <div class="script-title">模板C：打工人吐槽+韩语</div>
+        <div class="script-tag">高点赞</div>
+      </div>
+      <div class="script-structure">
+        <div class="step"><div class="step-num">1</div><div>开头3秒："老板又让我加班..."（情绪共鸣）</div></div>
+        <div class="step"><div class="step-num">2</div><div>吐槽环节：用中文吐槽职场（引发共鸣）</div></div>
+        <div class="step"><div class="step-num">3</div><div>转折："但是下班后的时间是我的！"</div></div>
+        <div class="step"><div class="step-num">4</div><div>学习环节：教一句"拒绝加班"的韩语</div></div>
+        <div class="step"><div class="step-num">5</div><div>结尾：微醺干杯+韩语祝福</div></div>
+      </div>
+      <div class="script-adapt">
+        <div class="script-adapt-title">🎯 优化建议</div>
+        结合具体职场场景（周报、开会、PUA），增强代入感
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📊</span> 数据复盘建议</div>
+    <div class="review-section">
+      <div class="review-item">
+        <div class="review-icon">⏰</div>
+        <div class="review-text">
+          <span class="highlight">最佳发布时间：</span>工作日 18:00-21:00，周末 10:00-12:00 和 20:00-22:00
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">🎵</div>
+        <div class="review-text">
+          <span class="highlight">热门BGM：</span>使用抖音热榜音乐，或韩剧OST（如《鬼怪》《太阳的后裔》）
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">#️⃣</div>
+        <div class="review-text">
+          <span class="highlight">推荐话题：</span>#打工人日常 #自学韩语 #微醺时刻 #下班后的生活 #韩语学习
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">💬</div>
+        <div class="review-text">
+          <span class="highlight">互动话术：</span>"你下班后会做什么？""想学哪句韩语？评论区告诉我"
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 选题灵感 ========== -->
+<div class="page" id="page-ideas">
+  <div class="header">
+    <div class="date-info">
+      <h1>选题灵感</h1>
+      <div class="sub">每日灵感 · 持续更新</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">💡</span> 今日灵感（7月30日）</div>
+    <div class="idea-card">
+      <div class="idea-title">「周一综合症」用韩语怎么说？</div>
+      <div class="idea-desc">结合周一上班场景，教打工人实用的韩语表达，引发共鸣。可以拍成"周一vlog+韩语教学"的形式。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">职场韩语</span>
+        <span class="idea-tag">vlog</span>
+        <span class="idea-tag">高共鸣</span>
+      </div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">挑战：用韩语点一杯微醺鸡尾酒</div>
+      <div class="idea-desc">模拟在韩国酒吧点酒的场景，教学实用对话。可以真的调一杯酒，增加视觉吸引力。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">场景教学</span>
+        <span class="idea-tag">微醺</span>
+        <span class="idea-tag">实用</span>
+      </div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">打工人必备：韩语辞职信模板</div>
+      <div class="idea-desc">虽然是玩笑性质，但"辞职"话题在职场内容中热度很高。可以做成搞笑+教学的形式。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">搞笑</span>
+        <span class="idea-tag">职场</span>
+        <span class="idea-tag">高互动</span>
+      </div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">韩语版「打工人语录」合集</div>
+      <div class="idea-desc">把经典打工人语录翻译成韩语，如"我太难了""摸鱼""内卷"等，做成系列合集。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">合集</span>
+        <span class="idea-tag">热点词汇</span>
+        <span class="idea-tag">系列内容</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📅</span> 本周选题日历</div>
+    <div class="idea-card">
+      <div class="idea-title">周三：「下班后的第一杯酒」vlog</div>
+      <div class="idea-desc">记录下班后的微醺时刻，顺便教一句和"酒"相关的韩语。氛围感+教学结合。</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">周四：「韩语发音挑战」搞笑向</div>
+      <div class="idea-desc">故意把韩语发音读错/读搞笑，然后纠正，增加娱乐性。适合快速涨粉。</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">周五：「周末计划」用韩语说</div>
+      <div class="idea-desc">分享周末计划，教学相关韩语词汇。周五发布，契合用户周末期待心理。</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">周六：「韩剧经典台词」教学</div>
+      <div class="idea-desc">选择近期热门韩剧台词，逐句教学。蹭热度+教学双重buff。</div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">周日：「一周学习复盘」</div>
+      <div class="idea-desc">总结本周学到的韩语，展示学习成果。增强人设可信度，引导粉丝一起学习。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🌟</span> 长期系列规划</div>
+    <div class="idea-card">
+      <div class="idea-title">系列1：「365天自学韩语打卡」</div>
+      <div class="idea-desc">每天记录学习进度，形成连续剧式内容。粉丝会追更，粘性极高。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">长期系列</span>
+        <span class="idea-tag">高粘性</span>
+      </div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">系列2：「用韩语打开打工人的一天」</div>
+      <div class="idea-desc">从早到晚，每个场景教一句实用韩语。如早上"早安"、中午"吃饭"、晚上"下班了"。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">场景化</span>
+        <span class="idea-tag">实用</span>
+      </div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-title">系列3：「微醺韩语小课堂」</div>
+      <div class="idea-desc">固定场景：微醺状态下教韩语，形成独特人设。"微醺+韩语"成为你的标签。</div>
+      <div class="idea-tags">
+        <span class="idea-tag">人设标签</span>
+        <span class="idea-tag">差异化</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 减肥方法 ========== -->
+<div class="page" id="page-diet">
+  <div class="header">
+    <div class="date-info">
+      <h1>减肥方法</h1>
+      <div class="sub">打工人专属 · 科学减脂</div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="num" id="currentWeight">112.5</div>
+      <div class="label">当前体重(斤)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num blue" id="targetWeight">107.5</div>
+      <div class="label">目标体重(斤)</div>
+    </div>
+    <div class="stat-box">
+      <div class="num purple" id="lostWeight">1.5</div>
+      <div class="label">已减(斤)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🍽️</span> 打工人减脂饮食方案</div>
+    <div class="diet-card">
+      <div class="diet-title">🌅 早餐（7:30-8:30）</div>
+      <div class="diet-content">优质蛋白+复合碳水+膳食纤维，开启代谢</div>
+      <ul class="diet-list">
+        <li>水煮蛋2个 + 全麦面包1片 + 黑咖啡</li>
+        <li>燕麦粥 + 坚果 + 蓝莓</li>
+        <li>无糖豆浆 + 玉米 + 小番茄</li>
+      </ul>
+    </div>
+    <div class="diet-card">
+      <div class="diet-title">🌞 午餐（12:00-13:00）</div>
+      <div class="diet-content">211法则：2拳蔬菜+1拳蛋白质+1拳主食</div>
+      <ul class="diet-list">
+        <li>鸡胸肉/鱼肉 + 西兰花/菠菜 + 糙米饭</li>
+        <li>牛肉沙拉 + 藜麦 + 油醋汁</li>
+        <li>豆腐 + 时令蔬菜 + 红薯</li>
+      </ul>
+    </div>
+    <div class="diet-card">
+      <div class="diet-title">🌙 晚餐（18:00-19:00）</div>
+      <div class="diet-content">轻食为主，睡前3小时不进食</div>
+      <ul class="diet-list">
+        <li>蔬菜沙拉 + 水煮虾/鸡胸肉</li>
+        <li>番茄蛋汤 + 少量杂粮</li>
+        <li>清蒸鱼 + 凉拌黄瓜</li>
+      </ul>
+    </div>
+    <div class="diet-card">
+      <div class="diet-title">☕ 办公室零食替代</div>
+      <div class="diet-content">把高热量零食换成这些：</div>
+      <ul class="diet-list">
+        <li>原味坚果（每天一小把）</li>
+        <li>无糖酸奶 + 奇亚籽</li>
+        <li>黄瓜条/小番茄</li>
+        <li>黑巧克力（85%以上）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🏃</span> 碎片化运动方案</div>
+    <div class="diet-card">
+      <div class="diet-title">⏰ 工作间隙（每1小时）</div>
+      <ul class="diet-list">
+        <li>站立办公 15分钟</li>
+        <li>深蹲 20个</li>
+        <li>拉伸肩颈 2分钟</li>
+        <li>爬楼梯代替电梯</li>
+      </ul>
+    </div>
+    <div class="diet-card">
+      <div class="diet-title">🌃 下班后（30分钟）</div>
+      <ul class="diet-list">
+        <li>快走/慢跑 20分钟</li>
+        <li>跳绳 10分钟（燃脂效率最高）</li>
+        <li>瑜伽/普拉提 拉伸放松</li>
+        <li>HIIT训练 15分钟（高强度间歇）</li>
+      </ul>
+    </div>
+    <div class="diet-card">
+      <div class="diet-title">😴 睡前（10分钟）</div>
+      <ul class="diet-list">
+        <li>平板支撑 1分钟 × 3组</li>
+        <li>卷腹 20个 × 3组</li>
+        <li>臀桥 20个 × 3组</li>
+        <li>腿部拉伸 3分钟</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📊</span> 本周减脂打卡</div>
+    <div class="habit-grid">
+      <div class="habit-item" onclick="toggleHabit(this)">
+        <div class="habit-icon">🥗</div>
+        <div class="habit-name">健康饮食</div>
+        <div class="habit-streak">周一</div>
+      </div>
+      <div class="habit-item" onclick="toggleHabit(this)">
+        <div class="habit-icon">🏃</div>
+        <div class="habit-name">运动30分</div>
+        <div class="habit-streak">周一</div>
+      </div>
+      <div class="habit-item" onclick="toggleHabit(this)">
+        <div class="habit-icon">💧</div>
+        <div class="habit-name">喝水2L</div>
+        <div class="habit-streak">周一</div>
+      </div>
+      <div class="habit-item" onclick="toggleHabit(this)">
+        <div class="habit-icon">😴</div>
+        <div class="habit-name">23点睡</div>
+        <div class="habit-streak">周一</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">⚠️</span> 打工人减脂避坑指南</div>
+    <div class="review-section">
+      <div class="review-item">
+        <div class="review-icon">🚫</div>
+        <div class="review-text">
+          <span class="highlight">不要节食：</span>节食会降低代谢，反而更难瘦。保证每天1200-1500大卡摄入。
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">🚫</div>
+        <div class="review-text">
+          <span class="highlight">不要完全断碳：</span>碳水是大脑能量来源，选择优质碳水（糙米、燕麦、红薯）。
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">🚫</div>
+        <div class="review-text">
+          <span class="highlight">不要久坐不动：</span>每1小时起身活动5分钟，比集中运动1小时更有效。
+        </div>
+      </div>
+      <div class="review-item">
+        <div class="review-icon">🚫</div>
+        <div class="review-text">
+          <span class="highlight">不要熬夜：</span>睡眠不足会导致饥饿素上升，更容易暴饮暴食。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- ===== 添加任务弹窗 ===== -->
+<div class="modal-overlay" id="addTodoModal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeAddTodo()">×</button>
+    <div class="modal-title">添加新任务</div>
+    <input class="modal-input" id="todoInput" placeholder="输入任务内容...">
+    <input class="modal-input" id="todoTime" placeholder="时间（如 14:00）">
+    <button class="modal-btn" onclick="addTodo()">添加</button>
+  </div>
+</div>
+
+<script>
+// ===== 数据存储 =====
+let todos = JSON.parse(localStorage.getItem('wb_todos')||'[]');
+let habits = JSON.parse(localStorage.getItem('wb_habits')||'{}');
+let weight = JSON.parse(localStorage.getItem('wb_weight')||'{"current":112.5,"target":107.5,"lost":1.5}');
+
+// ===== 初始化日期 =====
+function initDate(){
+  const now=new Date();
+  const month=now.getMonth()+1;
+  const date=now.getDate();
+  const week=['周日','周一','周二','周三','周四','周五','周六'][now.getDay()];
+  const year=now.getFullYear();
+  const pad=n=>n.toString().padStart(2,'0');
+  document.getElementById('currentDate').textContent=`${month}月${date}日`;
+  document.getElementById('currentWeek').textContent=`${week} | ${year}-${pad(month)}-${pad(date)}`;
+  const hour=now.getHours();
+  let greet='';
+  if(hour<12)greet='早上好，打工人';
+  else if(hour<18)greet='下午好，打工人';
+  else greet='晚上好，打工人';
+  document.getElementById('greeting').textContent=greet;
+}
+
+// ===== 页面切换 =====
+function switchPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  document.querySelector('.sidebar-item[data-page="'+page+'"]').classList.add('active');
+  if(page==='daily')renderTodos();
+}
+
+// ===== 韩语标签切换 =====
+function switchKoreanTab(tab,btn){
+  document.querySelectorAll('#page-korean .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['course','words','speak','video'].forEach(t=>{
+    document.getElementById('korean-'+t).style.display=t===tab?'block':'none';
+  });
+}
+
+// ===== 书架标签切换 =====
+function switchBookTab(tab,btn){
+  document.querySelectorAll('#page-books .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['growth','mind','career','health'].forEach(t=>{
+    document.getElementById('books-'+t).style.display=t===tab?'block':'none';
+  });
+}
+
+// ===== 待办事项 =====
+function renderTodos(){
+  const todoList=document.getElementById('todoList');
+  const doneList=document.getElementById('doneList');
+  todoList.innerHTML='';
+  doneList.innerHTML='';
+  let todoCount=0,doneCount=0;
+  todos.forEach((todo,idx)=>{
+    const html=`<div class="todo-item">
+      <div class="checkbox ${todo.done?'checked':''}" onclick="toggleTodo(${idx})"></div>
+      <div class="todo-text ${todo.done?'done':''}">${todo.text}</div>
+      ${todo.time?`<div class="todo-time">${todo.time}</div>`:''}
+      <div class="todo-actions">
+        <button class="btn-icon btn-edit" onclick="editTodo(${idx})">✏️</button>
+        <button class="btn-icon btn-del" onclick="deleteTodo(${idx})">🗑️</button>
+      </div>
+    </div>`;
+    if(todo.done){doneList.innerHTML+=html;doneCount++;}
+    else{todoList.innerHTML+=html;todoCount++;}
+  });
+  document.getElementById('todoCount').textContent=todoCount;
+  document.getElementById('habitCount').textContent=doneCount;
+}
+
+function toggleTodo(idx){
+  todos[idx].done=!todos[idx].done;
+  saveTodos();
+  renderTodos();
+}
+
+function deleteTodo(idx){
+  todos.splice(idx,1);
+  saveTodos();
+  renderTodos();
+}
+
+function editTodo(idx){
+  const text=prompt('修改任务：',todos[idx].text);
+  if(text){todos[idx].text=text;saveTodos();renderTodos();}
+}
+
+function openAddTodo(){
+  document.getElementById('addTodoModal').classList.add('active');
+  document.getElementById('todoInput').focus();
+}
+
+function closeAddTodo(){
+  document.getElementById('addTodoModal').classList.remove('active');
+}
+
+function addTodo(){
+  const text=document.getElementById('todoInput').value.trim();
+  const time=document.getElementById('todoTime').value.trim();
+  if(!text)return;
+  todos.push({text,done:false,time});
+  saveTodos();
+  document.getElementById('todoInput').value='';
+  document.getElementById('todoTime').value='';
+  closeAddTodo();
+  renderTodos();
+}
+
+function saveTodos(){
+  localStorage.setItem('wb_todos',JSON.stringify(todos));
+}
+
+// ===== 习惯打卡 =====
+function toggleHabit(el){
+  const id=el.dataset.habit;
+  if(!id)return;
+  habits[id]=!habits[id];
+  localStorage.setItem('wb_habits',JSON.stringify(habits));
+  el.classList.toggle('done',habits[id]);
+}
+
+// ===== 语音跟读 =====
+function speakText(text){
+  if('speechSynthesis' in window){
+    const utter=new SpeechSynthesisUtterance(text);
+    utter.lang='ko-KR';
+    utter.rate=0.8;
+    speechSynthesis.speak(utter);
+  }else{
+    alert('您的浏览器不支持语音播放，建议使用Chrome浏览器');
+  }
+}
+
+// ===== 音频上传 =====
+function handleAudioUpload(input){
+  const file=input.files[0];
+  if(!file)return;
+  alert('音频已上传：'+file.name+'\n\n会议纪要生成功能正在处理中...\n（实际部署后可接入AI语音识别API自动生成纪要）');
+}
+
+// ===== 每日金句 =====
+const quotes=[
+  {text:'"下班后的时间，才是真正属于自己的人生。微醺一杯，学点韩语，让平凡的日子闪闪发光。"',author:'WorkBuddy 每日寄语'},
+  {text:'"每一个坚持学习的夜晚，都是对未来自己的投资。"',author:'WorkBuddy 每日寄语'},
+  {text:'"打工人不是贬义词，努力生活的人最值得尊重。"',author:'WorkBuddy 每日寄语'},
+  {text:'"微醺是最好的状态，清醒看世界，糊涂过生活。"',author:'WorkBuddy 每日寄语'},
+  {text:'"学韩语不是为了逃离，而是为了拥有更多选择。"',author:'WorkBuddy 每日寄语'},
+  {text:'"今天的你比昨天多学了一个单词，这就是进步。"',author:'WorkBuddy 每日寄语'},
+  {text:'"下班后的一杯酒，是对白天最好的交代。"',author:'WorkBuddy 每日寄语'},
+  {text:'"坚持21天，你会发现自己比想象中更强大。"',author:'WorkBuddy 每日寄语'},
+];
+
+function setDailyQuote(){
+  const now=new Date();
+  const idx=now.getDate()%quotes.length;
+  document.getElementById('dailyQuote').textContent=quotes[idx].text;
+}
+
+// ===== 初始化 =====
+document.addEventListener('DOMContentLoaded',()=>{
+  initDate();
+  setDailyQuote();
+  renderTodos();
+  // 恢复习惯状态
+  document.querySelectorAll('.habit-item[data-habit]').forEach(el=>{
+    const id=el.dataset.habit;
+    if(habits[id])el.classList.add('done');
+  });
+  // 默认任务
+  if(todos.length===0){
+    todos=[
+      {text:'发布今日韩语学习短视频',done:false,time:'19:00'},
+      {text:'完成韩语第16课学习',done:false,time:'20:30'},
+      {text:'阅读《大女生》30分钟',done:false,time:'21:30'},
+      {text:'运动打卡30分钟',done:false,time:'22:00'},
+    ];
+    saveTodos();
+    renderTodos();
+  }
+});
+
+// 键盘事件
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeAddTodo();
+  if(e.key==='Enter'&&document.getElementById('addTodoModal').classList.contains('active')){
+    addTodo();
+  }
+});
+</script>
+</body>
+</html>
