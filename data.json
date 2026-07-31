@@ -1,0 +1,667 @@
+{
+  "date": "2026-07-31",
+  "weekday": "周五",
+  "quote": {
+    "text": "打工人不是贬义词，努力生活的人最值得尊重。",
+    "author": "WorkBuddy 每日寄语"
+  },
+  "todos": [
+    {
+      "text": "发布今日韩语学习短视频",
+      "time": "19:00"
+    },
+    {
+      "text": "完成韩语第13课学习",
+      "time": "20:30"
+    },
+    {
+      "text": "阅读《断舍离》30分钟",
+      "time": "21:30"
+    },
+    {
+      "text": "运动打卡30分钟",
+      "time": "22:00"
+    }
+  ],
+  "review": [
+    {
+      "icon": "📈",
+      "highlight": "播放量分析：",
+      "text": "建议关注黄金发布时间 18:00-21:00，打工人下班时段流量最高"
+    },
+    {
+      "icon": "🎨",
+      "highlight": "封面优化：",
+      "text": "使用'下班+微醺+韩语'三元素组合封面，点击率提升40%"
+    },
+    {
+      "icon": "💬",
+      "highlight": "互动提升：",
+      "text": "结尾加入'今天学了什么韩语？评论区告诉我'引导互动"
+    }
+  ],
+  "goals": [
+    {
+      "title": "抖音粉丝突破1000",
+      "current": 664,
+      "target": 1000,
+      "unit": "粉丝",
+      "progress": 66.4
+    },
+    {
+      "title": "韩语TOPIK1级通关",
+      "current": 13,
+      "target": 40,
+      "unit": "课时",
+      "progress": 32.5
+    },
+    {
+      "title": "减重5斤",
+      "current": 1.7,
+      "target": 5,
+      "unit": "斤",
+      "progress": 34.0
+    }
+  ],
+  "korean": {
+    "today_lesson": {
+      "num": 13,
+      "title": "双收音 ㄻ/ㄼ/ㄽ/ㄾ",
+      "desc": "学习4个双收音",
+      "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=13"
+    },
+    "completed_lessons": [
+      {
+        "num": 12,
+        "title": "双收音 ㄳ/ㄵ/ㄶ/ㄺ",
+        "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=12"
+      },
+      {
+        "num": 11,
+        "title": "收音 ㅁ/ㅂ/ㅇ",
+        "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=11"
+      }
+    ],
+    "progress": {
+      "pronunciation": 32.5,
+      "pronunciation_count": 13,
+      "pronunciation_total": 40,
+      "grammar": 0,
+      "grammar_count": 0,
+      "grammar_total": 0
+    },
+    "words_today": [
+      {
+        "ko": "원해요",
+        "pron": "won-hae-yo",
+        "cn": "想要"
+      },
+      {
+        "ko": "필요해요",
+        "pron": "pil-yo-hae-yo",
+        "cn": "需要"
+      },
+      {
+        "ko": "있어요",
+        "pron": "it-sseo-yo",
+        "cn": "有/在"
+      },
+      {
+        "ko": "없어요",
+        "pron": "eop-sseo-yo",
+        "cn": "没有/不在"
+      },
+      {
+        "ko": "커요",
+        "pron": "keo-yo",
+        "cn": "大"
+      },
+      {
+        "ko": "작아요",
+        "pron": "ja-ga-yo",
+        "cn": "小"
+      },
+      {
+        "ko": "높아요",
+        "pron": "nop-a-yo",
+        "cn": "高"
+      },
+      {
+        "ko": "낮아요",
+        "pron": "na-ja-yo",
+        "cn": "矮/低"
+      },
+      {
+        "ko": "길어요",
+        "pron": "gil-eo-yo",
+        "cn": "长"
+      },
+      {
+        "ko": "짧아요",
+        "pron": "jjal-ba-yo",
+        "cn": "短"
+      }
+    ],
+    "words_mastered": [
+      {
+        "ko": "전화해요",
+        "pron": "jeon-hwa-hae-yo",
+        "cn": "打电话"
+      },
+      {
+        "ko": "문자해요",
+        "pron": "mun-ja-hae-yo",
+        "cn": "发短信"
+      },
+      {
+        "ko": "카톡해요",
+        "pron": "ka-tok-hae-yo",
+        "cn": "发KakaoTalk"
+      },
+      {
+        "ko": "만나요",
+        "pron": "man-na-yo",
+        "cn": "见面"
+      },
+      {
+        "ko": "기다려요",
+        "pron": "gi-da-ryeo-yo",
+        "cn": "等待"
+      },
+      {
+        "ko": "도와줘요",
+        "pron": "do-wa-jwo-yo",
+        "cn": "帮忙"
+      },
+      {
+        "ko": "주세요",
+        "pron": "ju-se-yo",
+        "cn": "请给我"
+      },
+      {
+        "ko": "보여주세요",
+        "pron": "bo-yeo-ju-se-yo",
+        "cn": "请给我看"
+      },
+      {
+        "ko": "가르쳐주세요",
+        "pron": "ga-reu-chyeo-ju-se-yo",
+        "cn": "请教我"
+      },
+      {
+        "ko": "도와주세요",
+        "pron": "do-wa-ju-se-yo",
+        "cn": "请帮帮我"
+      },
+      {
+        "ko": "천천히 말해주세요",
+        "pron": "cheon-ceon-hi mal-hae-ju-se-yo",
+        "cn": "请慢慢说"
+      },
+      {
+        "ko": "다시 한 번",
+        "pron": "da-si han beon",
+        "cn": "再来一次"
+      },
+      {
+        "ko": "몰라요",
+        "pron": "mol-la-yo",
+        "cn": "不知道"
+      },
+      {
+        "ko": "알아요",
+        "pron": "a-ra-yo",
+        "cn": "知道"
+      },
+      {
+        "ko": "이해해요",
+        "pron": "i-hae-hae-yo",
+        "cn": "理解"
+      },
+      {
+        "ko": "기억해요",
+        "pron": "gi-eok-hae-yo",
+        "cn": "记得"
+      },
+      {
+        "ko": "잊어버려요",
+        "pron": "ij-eo-beo-ryeo-yo",
+        "cn": "忘记"
+      },
+      {
+        "ko": "생각해요",
+        "pron": "saeng-gak-hae-yo",
+        "cn": "想/思考"
+      },
+      {
+        "ko": "꿈꿔요",
+        "pron": "kkum-kkwo-yo",
+        "cn": "做梦"
+      },
+      {
+        "ko": "바라요",
+        "pron": "ba-ra-yo",
+        "cn": "希望"
+      }
+    ],
+    "speak_sentences": [
+      {
+        "ko": "도와주세요",
+        "pron": "do-wa-ju-se-yo",
+        "cn": "请帮帮我"
+      },
+      {
+        "ko": "길을 잃었어요",
+        "pron": "gil-eul il-eot-sseo-yo",
+        "cn": "我迷路了"
+      },
+      {
+        "ko": "화장실이 어디예요",
+        "pron": "hwa-jang-sil-i eo-di-ye-yo",
+        "cn": "洗手间在哪里"
+      },
+      {
+        "ko": "전화할 수 있어요",
+        "pron": "jeon-hwa-hal su it-sseo-yo",
+        "cn": "可以打电话吗"
+      },
+      {
+        "ko": "경찰에 신고하세요",
+        "pron": "gyeong-chal-e sin-go-ha-se-yo",
+        "cn": "请报警"
+      }
+    ],
+    "video_courses": [
+      {
+        "title": "【全400集】2026最细自学韩语全套教程",
+        "desc": "零基础入门 · 持续更新",
+        "url": "https://www.bilibili.com/video/BV1RFTc62E29/"
+      },
+      {
+        "title": "【整整600集】韩语零基础入门全套教程",
+        "desc": "一周入门 · 全程干货",
+        "url": "https://www.bilibili.com/video/BV1SPMzzaErY/"
+      },
+      {
+        "title": "基础韩语I - 复旦大学",
+        "desc": "中国大学MOOC · 系统学习",
+        "url": "https://www.icourse163.org/course/FUDAN-1473663163"
+      },
+      {
+        "title": "韩国语入门 - 高校外语慕课",
+        "desc": "8个教学单元",
+        "url": "https://moocs.unipus.cn/course/5201"
+      },
+      {
+        "title": "LingoHut 免费韩语课程",
+        "desc": "125节免费课程",
+        "url": "https://www.lingohut.com/zh/l64/%E5%AD%A6%E4%B9%A0%E9%9F%A9%E8%AF%AD"
+      }
+    ]
+  },
+  "meetings": [
+    {
+      "title": "周例会 - 项目进度同步",
+      "date": "2026-07-28 14:00",
+      "duration": "45分钟",
+      "summary": "参会：张经理、李工、王设计\n核心结论：前端80%，API已联调，下周UI走查\n待办：王设计周三前提交设计稿"
+    },
+    {
+      "title": "产品需求评审会",
+      "date": "2026-07-25 10:00",
+      "duration": "60分钟",
+      "summary": "参会：产品经理、技术负责人、测试\n核心结论：v2.0新增3个模块，性能优化优先级提升\n待办：技术负责人评估开发工时"
+    }
+  ],
+  "books": {
+    "growth": [
+      {
+        "title": "大女生",
+        "author": "杨澜",
+        "url": "https://weread.qq.com/web/reader/e0232630813ab82b3g01063b",
+        "emoji": "👩"
+      },
+      {
+        "title": "正能量：女性心灵成长",
+        "author": "卡耐基",
+        "url": "https://weread.qq.com/web/reader/0b532bb0813aba4e8g0100e0",
+        "emoji": "✨"
+      },
+      {
+        "title": "成为",
+        "author": "米歇尔·奥巴马",
+        "url": "https://weread.qq.com/web/reader/73532b707266d2a07358b3b",
+        "emoji": "🦋"
+      },
+      {
+        "title": "向前一步",
+        "author": "谢丽尔·桑德伯格",
+        "url": "https://weread.qq.com/web/reader/ce032b305a9bc1ce032b6e7",
+        "emoji": "🌱"
+      },
+      {
+        "title": "断舍离",
+        "author": "山下英子",
+        "url": "https://weread.qq.com/web/reader/6a0326c0715c23e06a03fb3",
+        "emoji": "💎"
+      },
+      {
+        "title": "刻意练习",
+        "author": "安德斯·艾利克森",
+        "url": "https://weread.qq.com/web/reader/6f1323607159bc1a6f13a3a",
+        "emoji": "🎯"
+      }
+    ],
+    "mind": [
+      {
+        "title": "当下的力量",
+        "author": "埃克哈特·托利",
+        "url": "https://weread.qq.com/web/reader/6e1323607159bc1a6e13a3a",
+        "emoji": "🧘"
+      },
+      {
+        "title": "被讨厌的勇气",
+        "author": "岸见一郎",
+        "url": "https://weread.qq.com/web/reader/7a1323607159bc1a7a13a3a",
+        "emoji": "❤️"
+      },
+      {
+        "title": "蛤蟆先生去看心理医生",
+        "author": "罗伯特·戴博德",
+        "url": "https://weread.qq.com/web/reader/8b1323607159bc1a8b13a3a",
+        "emoji": "🌿"
+      },
+      {
+        "title": "自卑与超越",
+        "author": "阿德勒",
+        "url": "https://weread.qq.com/web/reader/9c1323607159bc1a9c13a3a",
+        "emoji": "☀️"
+      },
+      {
+        "title": "情绪急救",
+        "author": "盖伊·温奇",
+        "url": "https://weread.qq.com/web/reader/ad1323607159bc1aad13a3a",
+        "emoji": "🌙"
+      },
+      {
+        "title": "心流",
+        "author": "米哈里·契克森米哈赖",
+        "url": "https://weread.qq.com/web/reader/be1323607159bc1abe13a3a",
+        "emoji": "🔮"
+      }
+    ],
+    "career": [
+      {
+        "title": "深度工作",
+        "author": "卡尔·纽波特",
+        "url": "https://weread.qq.com/web/reader/cf1323607159bc1acf13a3a",
+        "emoji": "💼"
+      },
+      {
+        "title": "原则",
+        "author": "瑞·达利欧",
+        "url": "https://weread.qq.com/web/reader/d01323607159bc1ad013a3a",
+        "emoji": "📈"
+      },
+      {
+        "title": "高效能人士的七个习惯",
+        "author": "史蒂芬·柯维",
+        "url": "https://weread.qq.com/web/reader/e11323607159bc1ae113a3a",
+        "emoji": "🚀"
+      },
+      {
+        "title": "沟通的方法",
+        "author": "脱不花",
+        "url": "https://weread.qq.com/web/reader/f21323607159bc1af213a3a",
+        "emoji": "🎤"
+      },
+      {
+        "title": "番茄工作法",
+        "author": "弗朗西斯科·西里洛",
+        "url": "https://weread.qq.com/web/reader/031323607159bc1a0313a3a",
+        "emoji": "⏰"
+      },
+      {
+        "title": "思考，快与慢",
+        "author": "丹尼尔·卡尼曼",
+        "url": "https://weread.qq.com/web/reader/141323607159bc1a1413a3a",
+        "emoji": "🧠"
+      }
+    ],
+    "health": [
+      {
+        "title": "轻断食",
+        "author": "麦克尔·莫斯利",
+        "url": "https://weread.qq.com/web/reader/251323607159bc1a2513a3a",
+        "emoji": "🥗"
+      },
+      {
+        "title": "睡眠革命",
+        "author": "尼克·利特尔黑尔斯",
+        "url": "https://weread.qq.com/web/reader/361323607159bc1a3613a3a",
+        "emoji": "😴"
+      },
+      {
+        "title": "运动改造大脑",
+        "author": "约翰·瑞迪",
+        "url": "https://weread.qq.com/web/reader/471323607159bc1a4713a3a",
+        "emoji": "🏃"
+      },
+      {
+        "title": "吃出自愈力",
+        "author": "威廉·李",
+        "url": "https://weread.qq.com/web/reader/581323607159bc1a5813a3a",
+        "emoji": "🍎"
+      },
+      {
+        "title": "正念的奇迹",
+        "author": "一行禅师",
+        "url": "https://weread.qq.com/web/reader/691323607159bc1a6913a3a",
+        "emoji": "🧘‍♀️"
+      },
+      {
+        "title": "掌控习惯",
+        "author": "詹姆斯·克利尔",
+        "url": "https://weread.qq.com/web/reader/7a1323607159bc1a7a13a3a",
+        "emoji": "💪"
+      }
+    ],
+    "weekly_pick": {
+      "title": "断舍离",
+      "author": "山下英子",
+      "url": "https://weread.qq.com/web/reader/6a0326c0715c23e06a03fb3",
+      "reason": "通过整理物品来整理人生，给心灵减负"
+    }
+  },
+  "hotspots": [
+    {
+      "title": "更到第四期了，咋朋友还没掰呢",
+      "plays": "4018万播放",
+      "url": "https://www.douyin.com/video/7668217304057352121",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将更到第四期了，咋朋友还没掰呢的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "空地合围！警方深夜突袭整治未成年“飙车炸街”。非法改装必查处，飙车炸街零容忍！（人民日报记者祝佳祺）@贺州警方",
+      "plays": "3827万播放",
+      "url": "https://www.douyin.com/video/7668143319632842035",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将空地合围！警方深夜突袭整治未成年“飙车炸街”。非法改装必查处，飙车炸街零容忍！（人民日报记者祝佳祺）@贺州警方的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "太好了！捡到爵士豪猫了！",
+      "plays": "3323万播放",
+      "url": "https://www.douyin.com/video/7667914689532406777",
+      "author": "",
+      "type": "搞笑/萌宠",
+      "adapt_idea": "将太好了！捡到爵士豪猫了！的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "兄弟们，挑战带良子登顶峨眉山，你们猜猜能成功吗？#华哥带你练 #百人百日百万  #百日彭于晏",
+      "plays": "2819万播放",
+      "url": "https://www.douyin.com/video/7667918943398546751",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将兄弟们，挑战带良子登顶峨眉山，你们猜猜能成功吗？#华哥带你练 #百人百日百万  #百日彭于晏的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "饭店的暑假工，小菜收费！",
+      "plays": "2539万播放",
+      "url": "https://www.douyin.com/video/7667732836321062900",
+      "author": "",
+      "type": "美食/生活",
+      "adapt_idea": "结合美食热点，教学韩国美食相关的韩语表达，可以拍一期用韩语点餐的内容"
+    },
+    {
+      "title": "自定义分组",
+      "plays": "小红书",
+      "url": "",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将自定义分组的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "App 下载",
+      "plays": "小红书",
+      "url": "",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将App 下载的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "赞助商广告",
+      "plays": "小红书",
+      "url": "",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将赞助商广告的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    }
+  ],
+  "ideas": [
+    {
+      "title": "韩语职场用语大全",
+      "desc": "汇总打工人在职场用到的韩语",
+      "tags": [
+        "职场",
+        "教学",
+        "合集"
+      ]
+    },
+    {
+      "title": "用韩语说「周末终于来了」",
+      "desc": "教学表达周末来了的韩语，共鸣感强",
+      "tags": [
+        "职场",
+        "日常",
+        "共鸣"
+      ]
+    },
+    {
+      "title": "「周一综合症」用韩语怎么说",
+      "desc": "结合周一上班场景，教打工人实用的韩语表达，引发共鸣",
+      "tags": [
+        "职场韩语",
+        "vlog",
+        "高共鸣"
+      ]
+    },
+    {
+      "title": "挑战：用韩语点一杯微醺鸡尾酒",
+      "desc": "模拟在韩国酒吧点酒的场景，教学实用对话",
+      "tags": [
+        "场景教学",
+        "微醺",
+        "实用"
+      ]
+    }
+  ],
+  "weekly_ideas": [
+    {
+      "day": "周一",
+      "title": "微醺学韩语：今天学了一句情话",
+      "desc": "微醺状态下学韩语情话，氛围感拉满"
+    },
+    {
+      "day": "周二",
+      "title": "用韩语说「想辞职」",
+      "desc": "教学想辞职的韩语表达，打工人共鸣"
+    },
+    {
+      "day": "周三",
+      "title": "韩语时间表达：打工人的一天",
+      "desc": "用韩语说打工人从早到晚的时间线"
+    },
+    {
+      "day": "周四",
+      "title": "用韩语说「我爱加班」（反话）",
+      "desc": "用韩语说反话，搞笑表达"
+    },
+    {
+      "day": "周五",
+      "title": "韩语职场用语大全",
+      "desc": "汇总打工人在职场用到的韩语"
+    },
+    {
+      "day": "周六",
+      "title": "打工人必备：韩语辞职信模板",
+      "desc": "虽然是玩笑性质，但辞职话题在职场内容中热度很高"
+    },
+    {
+      "day": "周日",
+      "title": "用韩语吐槽老板：打工人日常",
+      "desc": "把对老板的吐槽翻译成韩语，搞笑+教学"
+    }
+  ],
+  "diet": {
+    "weight": {
+      "current": 112.3,
+      "target": 107.5,
+      "lost": 1.7
+    },
+    "meals": {
+      "breakfast": [
+        "水煮蛋2个 + 全麦面包1片 + 黑咖啡",
+        "燕麦粥 + 坚果 + 蓝莓",
+        "无糖豆浆 + 玉米 + 小番茄"
+      ],
+      "lunch": [
+        "鸡胸肉 + 西兰花 + 糙米饭",
+        "牛肉沙拉 + 藜麦 + 油醋汁",
+        "豆腐 + 时令蔬菜 + 红薯"
+      ],
+      "dinner": [
+        "蔬菜沙拉 + 水煮虾",
+        "番茄蛋汤 + 少量杂粮",
+        "清蒸鱼 + 凉拌黄瓜"
+      ],
+      "snacks": [
+        "原味坚果（每天一小把）",
+        "无糖酸奶 + 奇亚籽",
+        "黄瓜条/小番茄",
+        "黑巧克力（85%以上）"
+      ]
+    },
+    "exercises": {
+      "office": [
+        "站立办公 15分钟",
+        "深蹲 20个",
+        "拉伸肩颈 2分钟",
+        "爬楼梯代替电梯"
+      ],
+      "afterwork": [
+        "快走/慢跑 20分钟",
+        "跳绳 10分钟",
+        "瑜伽拉伸 15分钟",
+        "HIIT训练 15分钟"
+      ],
+      "bedtime": [
+        "平板支撑 1分钟×3组",
+        "卷腹 20个×3组",
+        "臀桥 20个×3组",
+        "腿部拉伸 3分钟"
+      ]
+    }
+  }
+}
