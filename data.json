@@ -1,8 +1,8 @@
 {
-  "date": "2026-07-31",
+  "date": "2026-09-11",
   "weekday": "周五",
   "quote": {
-    "text": "打工人不是贬义词，努力生活的人最值得尊重。",
+    "text": "韩语难吗？难。但坚持更酷。",
     "author": "WorkBuddy 每日寄语"
   },
   "todos": [
@@ -11,11 +11,11 @@
       "time": "19:00"
     },
     {
-      "text": "完成韩语第13课学习",
+      "text": "完成韩语第15课学习",
       "time": "20:30"
     },
     {
-      "text": "阅读《断舍离》30分钟",
+      "text": "阅读《大女生》30分钟",
       "time": "21:30"
     },
     {
@@ -25,72 +25,144 @@
   ],
   "review": [
     {
-      "icon": "📈",
-      "highlight": "播放量分析：",
-      "text": "建议关注黄金发布时间 18:00-21:00，打工人下班时段流量最高"
+      "icon": "⏰",
+      "highlight": "最佳发布时间：",
+      "text": "工作日 18:00-21:00，周末 10:00-12:00 和 20:00-22:00"
     },
     {
-      "icon": "🎨",
-      "highlight": "封面优化：",
-      "text": "使用'下班+微醺+韩语'三元素组合封面，点击率提升40%"
+      "icon": "🎵",
+      "highlight": "热门BGM：",
+      "text": "使用抖音热榜音乐，或韩剧OST（如《鬼怪》《太阳的后裔》）"
     },
     {
-      "icon": "💬",
-      "highlight": "互动提升：",
-      "text": "结尾加入'今天学了什么韩语？评论区告诉我'引导互动"
+      "icon": "#️⃣",
+      "highlight": "推荐话题：",
+      "text": "#打工人日常 #自学韩语 #微醺时刻 #下班后的生活 #韩语学习"
     }
   ],
   "goals": [
     {
       "title": "抖音粉丝突破1000",
-      "current": 664,
+      "current": 656,
       "target": 1000,
       "unit": "粉丝",
-      "progress": 66.4
+      "progress": 65.6
     },
     {
       "title": "韩语TOPIK1级通关",
-      "current": 13,
+      "current": 15,
       "target": 40,
       "unit": "课时",
-      "progress": 32.5
+      "progress": 37.5
     },
     {
       "title": "减重5斤",
-      "current": 1.7,
+      "current": 1.9,
       "target": 5,
       "unit": "斤",
-      "progress": 34.0
+      "progress": 38.0
     }
   ],
   "korean": {
     "today_lesson": {
-      "num": 13,
-      "title": "双收音 ㄻ/ㄼ/ㄽ/ㄾ",
-      "desc": "学习4个双收音",
-      "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=13"
+      "num": 15,
+      "title": "发音规则：连音现象",
+      "desc": "学习韩语连音规则",
+      "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=15"
     },
     "completed_lessons": [
       {
-        "num": 12,
-        "title": "双收音 ㄳ/ㄵ/ㄶ/ㄺ",
-        "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=12"
+        "num": 14,
+        "title": "双收音 ㅀ/ㅄ/ㄿ",
+        "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=14"
       },
       {
-        "num": 11,
-        "title": "收音 ㅁ/ㅂ/ㅇ",
-        "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=11"
+        "num": 13,
+        "title": "双收音 ㄻ/ㄼ/ㄽ/ㄾ",
+        "bilibili_url": "https://www.bilibili.com/video/BV1RFTc62E29/?p=13"
       }
     ],
     "progress": {
-      "pronunciation": 32.5,
-      "pronunciation_count": 13,
+      "pronunciation": 37.5,
+      "pronunciation_count": 15,
       "pronunciation_total": 40,
       "grammar": 0,
       "grammar_count": 0,
       "grammar_total": 0
     },
     "words_today": [
+      {
+        "ko": "빨라요",
+        "pron": "ppal-la-yo",
+        "cn": "快"
+      },
+      {
+        "ko": "느려요",
+        "pron": "neu-ryeo-yo",
+        "cn": "慢"
+      },
+      {
+        "ko": "쉬워요",
+        "pron": "swi-wo-yo",
+        "cn": "容易"
+      },
+      {
+        "ko": "어려워요",
+        "pron": "eo-ryeo-wo-yo",
+        "cn": "难"
+      },
+      {
+        "ko": "재미있어요",
+        "pron": "jae-mi-it-sseo-yo",
+        "cn": "有趣"
+      },
+      {
+        "ko": "재미없어요",
+        "pron": "jae-mi-eop-sseo-yo",
+        "cn": "无聊"
+      },
+      {
+        "ko": "맛있어요",
+        "pron": "ma-si-sseo-yo",
+        "cn": "好吃"
+      },
+      {
+        "ko": "맛없어요",
+        "pron": "mat-eop-sseo-yo",
+        "cn": "难吃"
+      },
+      {
+        "ko": "예뻐요",
+        "pron": "ye-ppeo-yo",
+        "cn": "漂亮"
+      },
+      {
+        "ko": "미워요",
+        "pron": "mi-wo-yo",
+        "cn": "丑/讨厌"
+      }
+    ],
+    "words_mastered": [
+      {
+        "ko": "잊어버려요",
+        "pron": "ij-eo-beo-ryeo-yo",
+        "cn": "忘记"
+      },
+      {
+        "ko": "생각해요",
+        "pron": "saeng-gak-hae-yo",
+        "cn": "想/思考"
+      },
+      {
+        "ko": "꿈꿔요",
+        "pron": "kkum-kkwo-yo",
+        "cn": "做梦"
+      },
+      {
+        "ko": "바라요",
+        "pron": "ba-ra-yo",
+        "cn": "希望"
+      },
       {
         "ko": "원해요",
         "pron": "won-hae-yo",
@@ -140,135 +212,63 @@
         "ko": "짧아요",
         "pron": "jjal-ba-yo",
         "cn": "短"
-      }
-    ],
-    "words_mastered": [
-      {
-        "ko": "전화해요",
-        "pron": "jeon-hwa-hae-yo",
-        "cn": "打电话"
       },
       {
-        "ko": "문자해요",
-        "pron": "mun-ja-hae-yo",
-        "cn": "发短信"
+        "ko": "많아요",
+        "pron": "man-a-yo",
+        "cn": "多"
       },
       {
-        "ko": "카톡해요",
-        "pron": "ka-tok-hae-yo",
-        "cn": "发KakaoTalk"
+        "ko": "적어요",
+        "pron": "jeo-geo-yo",
+        "cn": "少"
       },
       {
-        "ko": "만나요",
-        "pron": "man-na-yo",
-        "cn": "见面"
+        "ko": "비싸요",
+        "pron": "bi-ssa-yo",
+        "cn": "贵"
       },
       {
-        "ko": "기다려요",
-        "pron": "gi-da-ryeo-yo",
-        "cn": "等待"
+        "ko": "싸요",
+        "pron": "ssa-yo",
+        "cn": "便宜"
       },
       {
-        "ko": "도와줘요",
-        "pron": "do-wa-jwo-yo",
-        "cn": "帮忙"
+        "ko": "좋아요",
+        "pron": "jo-a-yo",
+        "cn": "好"
       },
       {
-        "ko": "주세요",
-        "pron": "ju-se-yo",
-        "cn": "请给我"
-      },
-      {
-        "ko": "보여주세요",
-        "pron": "bo-yeo-ju-se-yo",
-        "cn": "请给我看"
-      },
-      {
-        "ko": "가르쳐주세요",
-        "pron": "ga-reu-chyeo-ju-se-yo",
-        "cn": "请教我"
-      },
-      {
-        "ko": "도와주세요",
-        "pron": "do-wa-ju-se-yo",
-        "cn": "请帮帮我"
-      },
-      {
-        "ko": "천천히 말해주세요",
-        "pron": "cheon-ceon-hi mal-hae-ju-se-yo",
-        "cn": "请慢慢说"
-      },
-      {
-        "ko": "다시 한 번",
-        "pron": "da-si han beon",
-        "cn": "再来一次"
-      },
-      {
-        "ko": "몰라요",
-        "pron": "mol-la-yo",
-        "cn": "不知道"
-      },
-      {
-        "ko": "알아요",
-        "pron": "a-ra-yo",
-        "cn": "知道"
-      },
-      {
-        "ko": "이해해요",
-        "pron": "i-hae-hae-yo",
-        "cn": "理解"
-      },
-      {
-        "ko": "기억해요",
-        "pron": "gi-eok-hae-yo",
-        "cn": "记得"
-      },
-      {
-        "ko": "잊어버려요",
-        "pron": "ij-eo-beo-ryeo-yo",
-        "cn": "忘记"
-      },
-      {
-        "ko": "생각해요",
-        "pron": "saeng-gak-hae-yo",
-        "cn": "想/思考"
-      },
-      {
-        "ko": "꿈꿔요",
-        "pron": "kkum-kkwo-yo",
-        "cn": "做梦"
-      },
-      {
-        "ko": "바라요",
-        "pron": "ba-ra-yo",
-        "cn": "希望"
+        "ko": "나빠요",
+        "pron": "na-ppa-yo",
+        "cn": "坏"
       }
     ],
     "speak_sentences": [
       {
-        "ko": "도와주세요",
-        "pron": "do-wa-ju-se-yo",
-        "cn": "请帮帮我"
+        "ko": "오늘 날씨가 좋아요",
+        "pron": "o-neul nal-ssi-ga jo-a-yo",
+        "cn": "今天天气好"
       },
       {
-        "ko": "길을 잃었어요",
-        "pron": "gil-eul il-eot-sseo-yo",
-        "cn": "我迷路了"
+        "ko": "점심 먹었어요",
+        "pron": "jeom-sim meo-geot-sseo-yo",
+        "cn": "吃午饭了吗"
       },
       {
-        "ko": "화장실이 어디예요",
-        "pron": "hwa-jang-sil-i eo-di-ye-yo",
-        "cn": "洗手间在哪里"
+        "ko": "커피 한 잔 할래요",
+        "pron": "keo-pi han jan hal-lae-yo",
+        "cn": "要喝杯咖啡吗"
       },
       {
-        "ko": "전화할 수 있어요",
-        "pron": "jeon-hwa-hal su it-sseo-yo",
-        "cn": "可以打电话吗"
+        "ko": "같이 가요",
+        "pron": "ga-chi ga-yo",
+        "cn": "一起去吧"
       },
       {
-        "ko": "경찰에 신고하세요",
-        "pron": "gyeong-chal-e sin-go-ha-se-yo",
-        "cn": "请报警"
+        "ko": "조금만 기다려주세요",
+        "pron": "jo-geum-man gi-da-ryeo-ju-se-yo",
+        "cn": "请稍等一下"
       }
     ],
     "video_courses": [
@@ -467,52 +467,52 @@
       }
     ],
     "weekly_pick": {
-      "title": "断舍离",
-      "author": "山下英子",
-      "url": "https://weread.qq.com/web/reader/6a0326c0715c23e06a03fb3",
-      "reason": "通过整理物品来整理人生，给心灵减负"
+      "title": "大女生",
+      "author": "杨澜",
+      "url": "https://weread.qq.com/web/reader/e0232630813ab82b3g01063b",
+      "reason": "杨澜写给女性的成长之书，关于自我认知、成长和同行"
     }
   },
   "hotspots": [
     {
-      "title": "更到第四期了，咋朋友还没掰呢",
-      "plays": "4018万播放",
-      "url": "https://www.douyin.com/video/7668217304057352121",
+      "title": "今天是毛泽东同志逝世50周年。缅怀一代伟人毛泽东！",
+      "plays": "2658万播放",
+      "url": "https://www.douyin.com/video/7683199587792709881",
       "author": "",
       "type": "热点/综合",
-      "adapt_idea": "将更到第四期了，咋朋友还没掰呢的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+      "adapt_idea": "将今天是毛泽东同志逝世50周年。缅怀一代伟人毛泽东！的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
     },
     {
-      "title": "空地合围！警方深夜突袭整治未成年“飙车炸街”。非法改装必查处，飙车炸街零容忍！（人民日报记者祝佳祺）@贺州警方",
-      "plays": "3827万播放",
-      "url": "https://www.douyin.com/video/7668143319632842035",
+      "title": "#媒体人精选计划 他是人类历史上第一位高喊“人民万岁”的领袖！请为世纪伟人毛泽东献花 #毛泽东同志逝世50周年 #广电v光 @抖音小助手",
+      "plays": "2174万播放",
+      "url": "https://www.douyin.com/video/7683213751328485285",
       "author": "",
       "type": "热点/综合",
-      "adapt_idea": "将空地合围！警方深夜突袭整治未成年“飙车炸街”。非法改装必查处，飙车炸街零容忍！（人民日报记者祝佳祺）@贺州警方的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+      "adapt_idea": "将#媒体人精选计划 他是人类历史上第一位高喊“人民万岁”的领袖！请为世纪伟人毛泽东献花 #毛泽东同志逝世50周年 #广电v光 @抖音小助手的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
     },
     {
-      "title": "太好了！捡到爵士豪猫了！",
-      "plays": "3323万播放",
-      "url": "https://www.douyin.com/video/7667914689532406777",
-      "author": "",
-      "type": "搞笑/萌宠",
-      "adapt_idea": "将太好了！捡到爵士豪猫了！的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
-    },
-    {
-      "title": "兄弟们，挑战带良子登顶峨眉山，你们猜猜能成功吗？#华哥带你练 #百人百日百万  #百日彭于晏",
-      "plays": "2819万播放",
-      "url": "https://www.douyin.com/video/7667918943398546751",
+      "title": "众望所归！今天带孙艺洲自律 #孙艺洲 #花小龙",
+      "plays": "1859万播放",
+      "url": "https://www.douyin.com/video/7683053110940328394",
       "author": "",
       "type": "热点/综合",
-      "adapt_idea": "将兄弟们，挑战带良子登顶峨眉山，你们猜猜能成功吗？#华哥带你练 #百人百日百万  #百日彭于晏的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+      "adapt_idea": "将众望所归！今天带孙艺洲自律 #孙艺洲 #花小龙的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
     },
     {
-      "title": "饭店的暑假工，小菜收费！",
-      "plays": "2539万播放",
-      "url": "https://www.douyin.com/video/7667732836321062900",
+      "title": "#无名在河南",
+      "plays": "1604万播放",
+      "url": "https://www.douyin.com/video/7683107035046951803",
       "author": "",
-      "type": "美食/生活",
-      "adapt_idea": "结合美食热点，教学韩国美食相关的韩语表达，可以拍一期用韩语点餐的内容"
+      "type": "热点/综合",
+      "adapt_idea": "将#无名在河南的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
+    },
+    {
+      "title": "全国牵挂的男孩郭斌以721分的成绩考入长春大学，今天，陪伴他12年的老师带他熟悉宿舍，从门口开始 一点点到床位。（记者：龚雪、宋宏轩、李娅晶 剪辑：王琼）",
+      "plays": "1414万播放",
+      "url": "https://www.douyin.com/video/7682391319154593065",
+      "author": "",
+      "type": "热点/综合",
+      "adapt_idea": "将全国牵挂的男孩郭斌以721分的成绩考入长春大学，今天，陪伴他12年的老师带他熟悉宿舍，从门口开始 一点点到床位。（记者：龚雪、宋宏轩、李娅晶 剪辑：王琼）的话题与打工人微醺学韩语的人设结合，找到共鸣点进行改编"
     },
     {
       "title": "自定义分组",
@@ -541,84 +541,84 @@
   ],
   "ideas": [
     {
-      "title": "韩语职场用语大全",
-      "desc": "汇总打工人在职场用到的韩语",
+      "title": "韩语情话教学：适合表白用",
+      "desc": "教学韩语情话，适合恋爱的打工人",
+      "tags": [
+        "情话",
+        "教学",
+        "高收藏"
+      ]
+    },
+    {
+      "title": "用韩语说「下班了！」的N种方式",
+      "desc": "教学多种表达下班的韩语句子",
       "tags": [
         "职场",
         "教学",
-        "合集"
-      ]
-    },
-    {
-      "title": "用韩语说「周末终于来了」",
-      "desc": "教学表达周末来了的韩语，共鸣感强",
-      "tags": [
-        "职场",
-        "日常",
-        "共鸣"
-      ]
-    },
-    {
-      "title": "「周一综合症」用韩语怎么说",
-      "desc": "结合周一上班场景，教打工人实用的韩语表达，引发共鸣",
-      "tags": [
-        "职场韩语",
-        "vlog",
-        "高共鸣"
-      ]
-    },
-    {
-      "title": "挑战：用韩语点一杯微醺鸡尾酒",
-      "desc": "模拟在韩国酒吧点酒的场景，教学实用对话",
-      "tags": [
-        "场景教学",
-        "微醺",
         "实用"
+      ]
+    },
+    {
+      "title": "韩语歌曲教学：IU的歌",
+      "desc": "通过IU的歌曲学韩语，蹭明星热度",
+      "tags": [
+        "音乐",
+        "韩语",
+        "蹭热度"
+      ]
+    },
+    {
+      "title": "打工人的韩语日记",
+      "desc": "用韩语写打工人的日记，记录生活",
+      "tags": [
+        "日记",
+        "日常",
+        "系列"
       ]
     }
   ],
   "weekly_ideas": [
     {
       "day": "周一",
-      "title": "微醺学韩语：今天学了一句情话",
-      "desc": "微醺状态下学韩语情话，氛围感拉满"
+      "title": "「周一综合症」用韩语怎么说",
+      "desc": "结合周一上班场景，教打工人实用的韩语表达，引发共鸣"
     },
     {
       "day": "周二",
-      "title": "用韩语说「想辞职」",
-      "desc": "教学想辞职的韩语表达，打工人共鸣"
+      "title": "下班后的第一杯酒，用韩语怎么说",
+      "desc": "记录下班后的微醺时刻，顺便教和酒相关的韩语"
     },
     {
       "day": "周三",
-      "title": "韩语时间表达：打工人的一天",
-      "desc": "用韩语说打工人从早到晚的时间线"
+      "title": "下班微醺vlog：今天学了这句韩语",
+      "desc": "完整记录下班→微醺→学韩语的全流程"
     },
     {
       "day": "周四",
-      "title": "用韩语说「我爱加班」（反话）",
-      "desc": "用韩语说反话，搞笑表达"
+      "title": "微醺状态下学韩语是什么体验",
+      "desc": "记录微醺后学韩语的搞笑瞬间"
     },
     {
       "day": "周五",
-      "title": "韩语职场用语大全",
-      "desc": "汇总打工人在职场用到的韩语"
+      "title": "韩语情话教学：适合表白用",
+      "desc": "教学韩语情话，适合恋爱的打工人"
     },
     {
       "day": "周六",
-      "title": "打工人必备：韩语辞职信模板",
-      "desc": "虽然是玩笑性质，但辞职话题在职场内容中热度很高"
+      "title": "韩语面试自我介绍教学",
+      "desc": "教学韩语面试自我介绍，实用+职场"
     },
     {
       "day": "周日",
-      "title": "用韩语吐槽老板：打工人日常",
-      "desc": "把对老板的吐槽翻译成韩语，搞笑+教学"
+      "title": "用韩语介绍我的工作",
+      "desc": "用韩语介绍自己的职业和工作内容"
     }
   ],
   "diet": {
     "weight": {
-      "current": 112.3,
+      "current": 112.1,
       "target": 107.5,
-      "lost": 1.7
+      "lost": 1.9
     },
     "meals": {
       "breakfast": [
