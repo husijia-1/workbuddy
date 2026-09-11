@@ -217,6 +217,64 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hi
 .word-card .cn { font-size:11px; color:var(--text-secondary); margin-top:2px; }
 .word-card .pron { font-size:10px; color:var(--pink-dark); margin-top:1px; }
 
+/* ===== 学习路线图 ===== */
+.roadmap-total {
+  background:linear-gradient(135deg,var(--pink-light),var(--blue-light));
+  border-radius:16px; padding:16px; margin-bottom:14px; text-align:center;
+}
+.roadmap-total .rt-title { font-size:15px; font-weight:700; color:var(--text); }
+.roadmap-total .rt-sub { font-size:11px; color:var(--text-secondary); margin-top:4px; }
+.roadmap-total .rt-days { font-size:11px; color:var(--pink-dark); margin-top:6px; font-weight:600; }
+.stage-card {
+  background:var(--card); border-radius:14px; padding:14px; margin-bottom:12px;
+  border-left:4px solid var(--blue); box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.stage-card.stage-locked { opacity:.6; }
+.stage-card .stage-head { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.stage-card .stage-badge {
+  width:34px; height:34px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; font-weight:700; color:#fff;
+}
+.stage-card .stage-title-wrap { flex:1; min-width:0; }
+.stage-card .stage-title { font-size:14px; font-weight:700; }
+.stage-card .stage-duration { font-size:10px; color:var(--text-secondary); margin-top:1px; }
+.stage-card .stage-pct {
+  font-size:11px; font-weight:700; padding:3px 10px; border-radius:10px; flex-shrink:0;
+}
+.stage-card .stage-desc { font-size:12px; color:var(--text-secondary); margin-bottom:8px; line-height:1.5; }
+.stage-card .stage-goal {
+  font-size:11px; color:var(--pink-dark); background:var(--pink-light);
+  border-radius:8px; padding:6px 10px; margin-bottom:8px; line-height:1.5;
+}
+.stage-card .stage-tasks { }
+.roadmap-task {
+  display:flex; align-items:flex-start; gap:10px; padding:9px 0;
+  border-bottom:1px solid #F0F0F0; cursor:pointer;
+}
+.roadmap-task:last-child { border-bottom:none; }
+.roadmap-task .rt-check {
+  width:20px; height:20px; border:2px solid var(--blue); border-radius:50%;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+}
+.roadmap-task.done .rt-check { background:var(--green); border-color:var(--green); }
+.roadmap-task.done .rt-check::after { content:'✓'; color:#fff; font-size:12px; font-weight:700; }
+.roadmap-task .rt-body { flex:1; min-width:0; }
+.roadmap-task .rt-text { font-size:13px; font-weight:500; line-height:1.4; }
+.roadmap-task.done .rt-text { text-decoration:line-through; color:var(--text-secondary); }
+.roadmap-task .rt-detail { font-size:11px; color:var(--text-secondary); margin-top:2px; line-height:1.4; }
+.stage-card .stage-links { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.stage-card .stage-link {
+  font-size:11px; padding:5px 12px; border-radius:12px;
+  background:var(--blue-light); color:var(--blue-dark); font-weight:600; text-decoration:none;
+}
+.stage-complete-badge {
+  position:absolute; top:10px; right:12px; font-size:10px; font-weight:700;
+  color:#2E7D32; background:var(--green-light); padding:3px 10px; border-radius:10px;
+}
+.roadmap-pitfalls li { font-size:12px; color:var(--text); padding:6px 0; display:flex; gap:6px; line-height:1.5; }
+.roadmap-pitfalls li::before { content:'⚠️'; }
+
 /* ===== 会议纪要 ===== */
 .meeting-card {
   background:var(--card); border-radius:14px; padding:14px; margin-bottom:10px;
@@ -582,12 +640,14 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hi
     </div>
   </div>
   <div class="tab-bar">
-    <button class="tab active" onclick="switchKoreanTab('course',this)">每日课程</button>
+    <button class="tab active" onclick="switchKoreanTab('roadmap',this)">学习路线</button>
+    <button class="tab" onclick="switchKoreanTab('course',this)">每日课程</button>
     <button class="tab" onclick="switchKoreanTab('words',this)">单词卡</button>
     <button class="tab" onclick="switchKoreanTab('speak',this)">语音跟读</button>
     <button class="tab" onclick="switchKoreanTab('video',this)">视频课</button>
   </div>
-  <div id="korean-course"></div>
+  <div id="korean-roadmap"></div>
+  <div id="korean-course" style="display:none"></div>
   <div id="korean-words" style="display:none"></div>
   <div id="korean-speak" style="display:none"></div>
   <div id="korean-video" style="display:none"></div>
@@ -993,7 +1053,7 @@ function switchPage(page) {
 function switchKoreanTab(tab, btn) {
   document.querySelectorAll('#page-korean .tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  ['course','words','speak','video'].forEach(t => {
+  ['roadmap','course','words','speak','video'].forEach(t => {
     document.getElementById('korean-' + t).style.display = t === tab ? 'block' : 'none';
   });
 }
@@ -1190,6 +1250,193 @@ function renderGoals() {
       '<div class="goal-meta">当前 ' + g.current + ' / ' + g.target + ' ' + g.unit + ' · 还需 ' + remain + ' 个</div>' +
     '</div>';
   }).join('');
+}
+
+// ======================================================================
+// 渲染模块：韩语学习路线图（零基础 → TOPIK I）
+// ======================================================================
+const KOREAN_ROADMAP = [
+  {
+    id: 's1', title: '四十音入门', duration: '第1-4周 · 每天30分钟',
+    color: '#5DB8D9', bg: 'var(--blue-light)',
+    desc: '40个基本音（19辅音+21元音）+ 7个代表收音，达到能拼读所有韩文',
+    goal: '🎯 毕业标准：随便打开一首韩语歌的歌词，能全部拼读出来（不求懂意思）',
+    tasks: [
+      { t: '第1周：单元音10个（ㅏㅓㅗㅜㅡㅣㅐㅔㅚㅟ）+ 基本辅音10个（ㄱㄴㄷㄹㅁㅂㅅㅇㅈ）', d: '边写边念，每个字符写20遍' },
+      { t: '第2周：复合元音11个（ㅑㅕㅛㅠㅘㅝ等）+ 辅音ㅊㅋㅌㅍㅎ + 紧音5个', d: '对比记忆：ㅏvsㅑ、ㅓvsㅕ' },
+      { t: '第3周：7个代表收音（ㄱㄴㄷㄹㅁㅂㅇ）+ 简单词拼读', d: '见词就拼：사랑해요 = sa-rang-hae-yo' },
+      { t: '第4周：总复习 + 随机指读歌词/菜单验证', d: '能全部拼读出来就毕业 ✨' }
+    ],
+    links: [
+      { text: '📹 B站·400集教程（前20集是四十音）', url: 'https://www.bilibili.com/video/BV1RFTc62E29/' },
+      { text: '🎓 复旦《基础韩语I》第0单元语音课', url: 'https://www.icourse163.org/course/FUDAN-1473663163' }
+    ]
+  },
+  {
+    id: 's2', title: '发音规则', duration: '第5-6周 · 每天30分钟',
+    color: '#C9A0DC', bg: 'var(--purple-light)',
+    desc: '7大变音规则，让你读出来的和韩国人说的一样地道',
+    goal: '🎯 毕业标准：读单词时能自觉应用连音和鼻音化',
+    tasks: [
+      { t: '连音（最常用）：收音遇元音开头就挪过去', d: '옷이 → 오시，학교 → 학꾜' },
+      { t: '鼻音化：ㄱㄷㅂ遇 ㄴㅁ → ㅇㄴㅁ', d: '감사합니다 → 감사함니다' },
+      { t: '颚化：ㄷㅌ + 이 → ㅈㅊ', d: '같이 → 가치' },
+      { t: '紧音化 / 送气化 / 辅音脱落 / 双收音读法', d: '每天1条规则+10个例子，B站搜「韩语发音规则」跟读5遍' }
+    ],
+    links: []
+  },
+  {
+    id: 's3', title: '教材入门《延世韩国语》1-2册', duration: '第2-5个月 · 一周一课共20课',
+    color: '#FF6B8A', bg: 'var(--pink-light)',
+    desc: '世界公认最适合自学的教材，掌握基础语法 + 1500词',
+    goal: '🎯 毕业标准：能用本周语法造5个「打工人句子」，看懂简单韩剧对白',
+    tasks: [
+      { t: '周一~周三：语法点 + 课文精读，抄写例句', d: '每天1个语法点，例句抄写3遍' },
+      { t: '周四~周五：词汇刷5遍（每课约35词）', d: '用沪江开心词场背延世词汇书' },
+      { t: '周六：课文音频跟读10遍 + 录音对比', d: '用工作台「语音跟读」模块' },
+      { t: '周日：微醺复盘，用本周语法造5个打工人句子', d: '예：저는 퇴근하고 싶어요（我想下班）' }
+    ],
+    links: [
+      { text: '📹 B站·600集延世教材逐课讲解', url: 'https://www.bilibili.com/video/BV1SPMzzaErY/' }
+    ]
+  },
+  {
+    id: 's4', title: '听说强化', duration: '贯穿始终 · 每天15分钟',
+    color: '#4CAF50', bg: 'var(--green-light)',
+    desc: '跟读 + 韩剧磨耳朵 + 语伴实战',
+    goal: '🎯 毕业标准：敢开口和韩国人打字/语音聊天',
+    tasks: [
+      { t: '每天1句韩剧台词跟读10遍 + 录音对比', d: '工作台「语音跟读」模块就是干这个的' },
+      { t: '通勤磨耳朵：听IU/防弹的歌', d: '看《请回答1988》开双语字幕' },
+      { t: '第3个月开始在HelloTalk找韩国语伴', d: '用你学的句子聊天，让对方纠正' },
+      { t: '每天多邻国闯关10分钟保持手感', d: '配合沪江开心词场背单词' }
+    ],
+    links: []
+  },
+  {
+    id: 's5', title: 'TOPIK I 冲刺', duration: '第6个月 · 每天1小时',
+    color: '#E8A838', bg: 'var(--yellow-light)',
+    desc: '真题冲刺，拿到官方证书（听力30题+阅读40题，满分200）',
+    goal: '🎯 目标：80分=1级，140分=2级，词汇量1500稳过1级',
+    tasks: [
+      { t: '下载TOPIK历年真题（官网免费）', d: '搜索「TOPIK GOV」官方真题库' },
+      { t: '每天1套听力真题 + 错题复盘', d: '听力占比大，重点磨耳朵' },
+      { t: '词汇量冲刺到1500', d: '复习延世1-2册全部词汇' },
+      { t: '考前一周：每天1套完整模拟', d: '掐时间做，适应考试节奏' }
+    ],
+    links: []
+  }
+];
+
+function renderRoadmap() {
+  const el = document.getElementById('korean-roadmap');
+  if (!el) return;
+  const done = JSON.parse(localStorage.getItem('wb_roadmap') || '{}');
+  const startDate = localStorage.getItem('wb_roadmap_start');
+
+  // 计算总进度
+  let totalTasks = 0, doneTasks = 0;
+  KOREAN_ROADMAP.forEach(st => {
+    st.tasks.forEach((task, i) => {
+      totalTasks++;
+      if (done[st.id + '-' + i]) doneTasks++;
+    });
+  });
+  const totalPct = totalTasks ? Math.round(doneTasks / totalTasks * 100) : 0;
+
+  // 学习天数
+  let daysHtml = '';
+  if (startDate) {
+    const days = Math.max(1, Math.ceil((Date.now() - new Date(startDate).getTime()) / 86400000));
+    daysHtml = '<div class="rt-days">📅 已坚持 ' + days + ' 天 · 完成度 ' + totalPct + '%</div>';
+  } else {
+    daysHtml = '<div class="rt-days" style="cursor:pointer" onclick="startRoadmap()">👆 点击开始记录你的第1天</div>';
+  }
+
+  let html = '<div class="roadmap-total">' +
+    '<div class="rt-title">🗺️ 零基础 → TOPIK I 全程路线（约6-7个月）</div>' +
+    '<div class="rt-sub">' + doneTasks + ' / ' + totalTasks + ' 个任务已完成</div>' +
+    '<div class="progress-bar" style="margin-top:10px"><div class="progress-fill" style="width:' + totalPct + '%;background:var(--pink)"></div></div>' +
+    daysHtml +
+  '</div>';
+
+  // 各阶段卡片
+  KOREAN_ROADMAP.forEach(st => {
+    const stDone = st.tasks.filter((task, i) => done[st.id + '-' + i]).length;
+    const stPct = Math.round(stDone / st.tasks.length * 100);
+    const isComplete = stPct === 100;
+
+    html += '<div class="stage-card' + (isComplete ? '' : '') + '" style="border-left-color:' + st.color + '">' +
+      (isComplete ? '<div class="stage-complete-badge">✓ 已完成</div>' : '') +
+      '<div class="stage-head">' +
+        '<div class="stage-badge" style="background:' + st.color + '">' + st.id.replace('s', '') + '</div>' +
+        '<div class="stage-title-wrap">' +
+          '<div class="stage-title">' + st.title + '</div>' +
+          '<div class="stage-duration">' + st.duration + '</div>' +
+        '</div>' +
+        '<div class="stage-pct" style="background:' + st.bg + '">' + stPct + '%</div>' +
+      '</div>' +
+      '<div class="stage-desc">' + st.desc + '</div>' +
+      '<div class="stage-goal">' + st.goal + '</div>' +
+      '<div class="progress-bar" style="margin-bottom:10px"><div class="progress-fill" style="width:' + stPct + '%;background:' + st.color + '"></div></div>' +
+      '<div class="stage-tasks">';
+
+    st.tasks.forEach((task, i) => {
+      const isDone = !!done[st.id + '-' + i];
+      html += '<div class="roadmap-task' + (isDone ? ' done' : '') + '" onclick="toggleRoadmapTask(\'' + st.id + '\',' + i + ')">' +
+        '<div class="rt-check"></div>' +
+        '<div class="rt-body">' +
+          '<div class="rt-text">' + task.t + '</div>' +
+          '<div class="rt-detail">' + task.d + '</div>' +
+        '</div>' +
+      '</div>';
+    });
+
+    html += '</div>';
+
+    if (st.links && st.links.length) {
+      html += '<div class="stage-links">';
+      st.links.forEach(l => {
+        html += '<a class="stage-link" href="' + l.url + '" target="_blank">' + l.text + '</a>';
+      });
+      html += '</div>';
+    }
+
+    html += '</div>';
+  });
+
+  // 常见坑
+  html += '<div class="card"><div class="card-title"><span class="emoji">⚠️</span> 三个最常见的坑</div>' +
+    '<ul class="roadmap-pitfalls" style="list-style:none">' +
+      '<li><b>四十音没练熟就赶进度</b> → 后面全是夹生饭，宁慢勿快</li>' +
+      '<li><b>只看不读</b> → 韩语发音必须出声，哑巴韩语学不会</li>' +
+      '<li><b>三天打鱼</b> → 每天30分钟 &gt; 周末突击4小时（配合「习惯打卡」模块）</li>' +
+    '</ul></div>';
+
+  // 工具推荐
+  html += '<div class="card"><div class="card-title"><span class="emoji">🛠️</span> 配套工具</div>' +
+    '<div class="stage-tasks">' +
+      '<div class="roadmap-task"><div class="rt-check" style="background:var(--blue-light);border-color:var(--blue);color:var(--blue-dark)">APP</div><div class="rt-body"><div class="rt-text">多邻国</div><div class="rt-detail">每天10分钟闯关，保持手感</div></div></div>' +
+      '<div class="roadmap-task"><div class="rt-check" style="background:var(--pink-light);border-color:var(--pink);color:var(--pink-dark)">APP</div><div class="rt-body"><div class="rt-text">沪江开心词场</div><div class="rt-detail">背延世韩国语词汇书</div></div></div>' +
+      '<div class="roadmap-task"><div class="rt-check" style="background:var(--green-light);border-color:var(--green);color:#2E7D32">APP</div><div class="rt-body"><div class="rt-text">Naver Papago</div><div class="rt-detail">查词翻译，比百度准</div></div></div>' +
+      '<div class="roadmap-task"><div class="rt-check" style="background:var(--purple-light);border-color:var(--purple);color:var(--purple)">APP</div><div class="rt-body"><div class="rt-text">HelloTalk</div><div class="rt-detail">第3个月开始找韩国语伴实战</div></div></div>' +
+    '</div></div>';
+
+  el.innerHTML = html;
+}
+
+function toggleRoadmapTask(stageId, taskIdx) {
+  const done = JSON.parse(localStorage.getItem('wb_roadmap') || '{}');
+  const key = stageId + '-' + taskIdx;
+  done[key] = !done[key];
+  localStorage.setItem('wb_roadmap', JSON.stringify(done));
+  renderRoadmap();
+}
+
+function startRoadmap() {
+  const today = new Date().toISOString().slice(0, 10);
+  localStorage.setItem('wb_roadmap_start', today);
+  renderRoadmap();
 }
 
 // ======================================================================
@@ -1440,6 +1687,7 @@ async function init() {
   initDate();
 
   // 4. 渲染所有模块
+  renderRoadmap();
   renderDaily();
   renderGoals();
   renderKorean();
